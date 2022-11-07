@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/icofont.min.css">
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+    <title>GD Support | Home</title>
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header">
+      <div class="container d-flex align-items-center">
+        <div class="logo mr-auto">
+          <!-- Uncomment below if you prefer to use a text/name logo -->
+          <!-- <h1 class="text-light"><a href="home.html">Go Drazy<span>.</span></a></h1> -->
+          <!-- Comment below if you prefer not to use an image logo -->
+          <a href="home.html">
+            <img src="images/gd-logo.png" alt="Go Drazy" class="img-fluid">
+          </a>
+        </div>
+        <nav class="nav-menu d-none d-lg-block">
+          <ul>
+            <li>
+              <a href="index.html">Home</a>
+            </li>
+            <li>
+              <a href="#about">About Us</a>
+            </li>
+            <li id="logout">
+              <a href="#logout" onclick="logout()">Logout</a>
+            </li>
+            <li class="get-started">
+              <a href="#about">Get Started</a>
+            </li>
+          </ul>
+        </nav>
+        <!-- .nav-menu -->
+      </div>
+    </header>
+    <!-- End Header -->
+    <div class="content">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="row justify-content-center">
+              <div class="col-md-6" style="padding-right: 0px; padding-left: 0px; margin-bottom: -10px">
+                <div class="head-container">
+                  <!--
+										  <div class="head-logo"><div><img src="images/gd-logo.png" alt="GO DRAZY" class="img-fluid"></div></div>
+					-->
+                  <div class="head-title">
+                    <div>
+                      <h5 class="heading mb-4">Let us hep you!</h5>
+                    </div>
+                    <hr class="header-hr">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style="margin-top: 4%;">
+                <span style="color: #4f4964;">Please sumbimt the form below, We will get back to you soon.</span>
+                <form class="mb-5" method="post" id="contactForm" name="contactForm">
+                  <div class="row">
+                    <div class="float-parent-element">
+                      <div class="col-md-5 float-child-element">
+                        <div class="contactMedium createQuery" data-type="call">
+                          <i class="fa fa-phone"></i>
+                          <p>
+                            <a href="tel:+919821008428">Call Now</a>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-5 float-child-element">
+                        <div class="contactMedium createQuery" data-type="email">
+                          <i class="fa fa-envelope"></i>
+                          <p>
+                            <a href="mailto: support@godrazy.com">Send Email</a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 form-group" style="margin-top: 1.5rem">
+                      <hr class="seperator">
+                      <br>
+                      <textarea class="form-control" name="message" id="query" cols="30" rows="7" placeholder="Write your query..."></textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <input type="file" class="form-control" name="file" id="file" placeholder="file" style="margin: .4rem 0; background: none;" multiple="true">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+<!--
+                      <img src="images/query1.jpg" alt="'+Ticket Attachment+'" style="height: 200px; margin-left:10px;"></img>
+                      <img src="images/query1.jpg" alt="'+Ticket Attachment+'" style="height: 200px; margin-left:10px;"></img>
+                      <img src="images/query1.jpg" alt="'+Ticket Attachment+'" style="height: 200px; margin-left:10px;"></img>
+-->
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <button class="btn btn-primary rounded-0 py-2 px-4 createQuery" data-type="query">Submit Query</button>
+                      <span class="submitting"></span>
+                    </div>
+                  </div>
+                </form>
+                <div id="form-message-success"> Query submitted successfully. </div>
+                <div id="form-message-warning"> Query submission failed! </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="queryContainer">
+      <span>Welcome to</span>
+      <table class="table table-responsive-xl">
+        <tbody id="queryListContainer"></tbody>
+      </table>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
