@@ -269,11 +269,11 @@ body {
 }
 
 a {
-  color: #fdc134;
+  color: #52504a;
 }
 
-a:hover {
-  color: #fdd067;
+ul > li > a:hover {
+  color: #5250b9;
   text-decoration: none;
 }
 
@@ -513,6 +513,7 @@ a:hover {
   margin: 0;
   padding: 0;
   list-style: none;
+  margin: 15px 0px 0px 0px;
 }
 
 .mobile-nav span {
@@ -559,7 +560,7 @@ a:hover {
   background: #213b52;
   color: #fff;
   border-radius: 50px;
-  margin: 15px;
+  margin: 0px;
   padding: 8px 25px 10px 25px;
   text-align: center;
 }
@@ -589,6 +590,7 @@ a:hover {
 .mobile-nav-active .mobile-nav {
   opacity: 1;
   visibility: visible;
+  text-align: center;
 }
 
 .mobile-nav-active .mobile-nav-toggle i {

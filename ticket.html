@@ -15,7 +15,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>Contact Form #6</title>
+    <title>GD Support | Ticket</title>
   </head>
   
   
@@ -33,13 +33,21 @@
       </div>
 
       <nav class="nav-menu d-none d-lg-block">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#services">Logout</a></li>
-          <li class="get-started"><a href="#about">Get Started</a></li>
-        </ul>
-      </nav><!-- .nav-menu -->
+		<ul>
+		  <li>
+			<a href="index.html">Home</a>
+		  </li>
+		  <!-- <li>
+			<a href="#about">About Us</a>
+		  </li> -->
+		  <li id="logout">
+			<a href="#logout" onclick="logout()">Logout</a>
+		  </li>
+		  <!-- <li class="get-started">
+			<a href="#about">Get Started</a>
+		  </li> -->
+		</ul>
+	  </nav><!-- .nav-menu -->
     </div>
   </header><!-- End Header -->
   
@@ -105,6 +113,6 @@
   
     <script src="js/jquery.min.js"></script>
     <script src="js/ticket.js"></script>
-	
+	<script src="js/common.js"></script>
   </body>
 </html>

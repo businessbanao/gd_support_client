@@ -102,26 +102,29 @@
 		createTicket(contactMedium);
 	}); 
 
-	// $("#file").change( function(e) {
-	// 	if(($("#file")[0]).files.length > 3){
-	// 		($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
-	// 		$("#form-message-warning").show();
-	// 	} else {
-	// 		$("#form-message-warning").hide();
-	// 	}
-	// });
-
 	$(document).on('change', '#file', function(e) {
+		$("#attachmentHolder").html('');
 		if(($("#file")[0]).files.length > 3){
 			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
 			$("#form-message-warning").show();
 		} else {
 			$("#form-message-warning").hide();
+			readURL(this);
 		}
 	}); 
 
-
-	// <img src="images/query1.jpg" alt="'+Ticket Attachment+'" style="height: 200px; margin-left:10px;"></img>
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var myFiles = input.files;
+			for (var i = 0; i < myFiles.length; i++) {				
+				var reader = new FileReader();				
+				reader.onload = function (e) {
+					$('<img src="'+e.target.result+'" id="profile-img-tag" width="20px" height="50px"/>').appendTo("#attachmentHolder");
+				}
+				reader.readAsDataURL(myFiles[i]);
+			}
+        }
+    }
 
 	if(isAuthorised){
 		getTickets();
