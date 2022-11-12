@@ -15,7 +15,14 @@
 	/***************************** HOME ******************************/
 	/******************************************************************/
 
-	const baseUrl = "http://54.210.61.230:3500/";
+	/***** constants start *****/
+	const protocal = "http";
+	const host = "54.210.61.230";
+	const port = "3500";
+	const baseUrl = `${protocal}://${host}:${port}/`;
+
+	/***** constants end *****/
+
 	function getTickets() {
 		var custId = localStorage.getItem("custId");
 		var custExist = false;
@@ -26,33 +33,35 @@
 				url: `${baseUrl}api/v1/admin/support/getTickets?customerId1=${custId}`,
 				type: "GET",
 				success: function (data) {
-					var myStringArray = data.object.TicketsList.filter(e => e.contactMedium == 'query');
+					var ticketArray = data.object.TicketsList.filter(e => e.contactMedium == 'query');
 
-					if (myStringArray) {
+					if (undefined != ticketArray && ticketArray.length > 0) {
 						var elm = '';
 						var status;
 
-						for (var i = 0; i < myStringArray.length; i++) {
-							if ((myStringArray[i]).status == 'OPEN') { status = 'active'; }
-							else if ((myStringArray[i]).status == 'INPROGRESS') { status = 'waiting'; }
+						for (var i = 0; i < ticketArray.length; i++) {
+							if ((ticketArray[i]).status == 'OPEN') { status = 'active'; }
+							else if ((ticketArray[i]).status == 'INPROGRESS') { status = 'waiting'; }
 							elm += '<tr>' +
 								'<td class="d-flex align-items-center">' +
 								'<div>';
-							if ((myStringArray[i]).contactMedium == 'query') {
-								elm += '<span class="listcontent">' + (myStringArray[i]).query + '</span><br>';
+							if ((ticketArray[i]).contactMedium == 'query') {
+								elm += '<span class="listcontent">' + (ticketArray[i]).query + '</span><br>';
 							}
-							elm += '<span class="listcontent">' + (myStringArray[i]).updatedAt.substring(0, 10) + '</span>' +
+							elm += '<span class="listcontent">' + (ticketArray[i]).updatedAt.substring(0, 10) + '</span>' +
 								'</div>' +
 								'</td>' +
 								'<td>' +
-								'<span class="' + status + '">' + (myStringArray[i]).status + '</span>' +
+								'<span class="' + status + '">' + (ticketArray[i]).status + '</span>' +
 								'</td>' +
 								'<td>' +
-								'<a class="far fa-eye" href="ticket.html?ticketId=' + (myStringArray[i])._id + '"></a>' +
+								'<a class="far fa-eye" href="ticket.html?ticketId=' + (ticketArray[i])._id + '"></a>' +
 								'</td>';
 							'</tr>';
 						}
 						document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
+					} else {
+						$("#norecordfound").html('<img src="images/norecordfound.png" alt="Go Drazy" class="img-fluid">');
 					}
 				},
 				error: function (error) { console.log("Error : ", `Error ${error}`); }
@@ -81,22 +90,9 @@
 				type: "POST",
 				data: formData,
 				success: function (data, textStatus, jqXHR) {
-					// if (contactMedium == "query") {
-					// 	$("#form-message-success").show();
-					// 	$("#form-message-success").hide(5000);
-					// }
-					// isCreated = true;
-
-					alert("Ticket created successfully");
 					// show toaster
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					// if (contactMedium == "query") {
-					// 	$("#form-message-warning").show();
-					// 	$("#form-message-warning").hide(5000);
-					// }
-					// isCreated = false;
-
 					// show toaster
 				}
 			});
@@ -107,7 +103,7 @@
 	let imgArr = [];
 	function uploadImage(event) {
 
-		if (imgArr.length > 2) {
+		if (imgArr.length > 3) {
 			// ($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
 			// $("#form-message-warning").show();
 			// setTimeout(() => {
@@ -116,8 +112,7 @@
 
 
 			// show toaster
-			alert("More than 3 attachments not allowed.");
-			return
+			return;
 		}
 
 		let authorizationToken = localStorage.getItem("authToken") || ''
@@ -149,11 +144,9 @@
 				}
 
 				// ($("#attachmentHolder")[0]).innerHTML = "More than 3 attachments not allowed.";
-
-				alert('sucess');
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				alert('error');
+				//error
 			}
 		});
 	}

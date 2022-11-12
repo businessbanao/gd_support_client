@@ -1,11 +1,10 @@
-!(function ($) {
 
 	/******************************************************************/
 	/************************* common code ****************************/
 	/******************************************************************/
 
-	var authToken = localStorage.getItem("authToken");
-	var isAuthorised = (authToken != null && authToken != "" && authToken != undefined) ? true : false;
+	var authToken_val = localStorage.getItem("authToken");
+	var isAuthorised = (authToken_val != null && authToken_val != "" && authToken_val != undefined) ? true : false;
 	if ((window.location.href).includes('login.html')) {
 		if (isAuthorised) { window.location.href = "home.html"; }
 	} else {
@@ -16,6 +15,18 @@
 	/***************************** LOGIN ******************************/
 	/******************************************************************/
 
+	/***** constants start *****/
+	const protocal = "http";
+	const host = "54.210.61.230";
+	const port = "3500";
+	const baseUrl = `${protocal}://${host}:${port}/`;
+
+
+	const custId = "custId";
+	const authToken = "authToken";
+	const homePage = "home.html";
+	/***** constants end *****/
+
 	$("#loginbtn").click(function (event) {
 		event.preventDefault();
 		login($("#email").val(), $("#password").val());
@@ -25,8 +36,6 @@
 		$("#errorMsg").hide(2000);
 	});
 
-	const baseUrl = "http://54.210.61.230:3500/";
-
 	function login(emailId, pass) {
 		var formData = { email: emailId, password: pass };
 		$.ajax({
@@ -35,9 +44,9 @@
 			data: formData,
 			success: function (data, textStatus, jqXHR) {
 				if (!data.error) {
-					localStorage.setItem("custId", data.object.AdminDetails._id);
-					localStorage.setItem("authToken", data.object.authToken);
-					window.location.href = "home.html";
+					localStorage.setItem(`${custId}`, data.object.AdminDetails._id);
+					localStorage.setItem(`${authToken}`, data.object.authToken);
+					window.location.href = `${homePage}`;
 				} else if (data.error) {
 					($("#errorMsg")[0]).innerHTML = data.object.msg;
 					$("#errorMsg").show();
@@ -50,4 +59,11 @@
 		});
 	}
 
-})(jQuery);
+	function myFunction() {
+		var x = document.getElementById("password");
+		if (x.type === "password") {
+		  x.type = "text";
+		} else {
+		  x.type = "password";
+		}
+	  }

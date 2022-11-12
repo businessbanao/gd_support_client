@@ -40,6 +40,7 @@ if ($('.nav-menu').length) {
     $('body').append('<div class="mobile-nav-overly"></div>');
 
     $(document).on('click', '.mobile-nav-toggle', function(e) {
+      e.preventDefault();
       $('body').toggleClass('mobile-nav-active');
       $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
       $('.mobile-nav-overly').toggle();

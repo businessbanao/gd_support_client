@@ -4,6 +4,7 @@
 	<title>Login V2</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<title>GD Support | Login</title>
 </head>
@@ -19,15 +20,13 @@
 					<span class="login100-form-title p-b-26">
 						<i class="zmdi zmdi-font"><img class="loginLogo" src="images/gd-logo.png"></img></i>
 					</span>
-
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-						<input class="input100" type="text" name="email" id="email" placeholder="Email">
+						<input class="input100" type="text" name="email" id="email" placeholder="Email"></input>
 					</div>
-
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" id="password" placeholder="Password">
+						<input class="input100" type="password" name="pass" id="password" placeholder="Password"></input>
 					</div>
-
+					<input type="checkbox" onclick="myFunction()"><span class="note">Show Password</span>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
@@ -36,19 +35,7 @@
 							</button>
 						</div>
 					</div>
-
 					<br><p id="errorMsg"></p><br><br>
-					
-
-					<div class="text-center p-t-115">
-						<span class="txt1">
-							Don’t have an account?
-						</span>
-
-						<a class="txt2" href="#">
-							Sign Up
-						</a>
-					</div>
 				</form>
 			</div>
 		</div>
