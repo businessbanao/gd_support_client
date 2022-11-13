@@ -33,7 +33,9 @@
 				url: `${baseUrl}api/v1/admin/support/getTicket/${ticketId}`,
 				type: "GET",
 				success: function (data) {
-					console.log("Success");
+					// Update status baar
+					updateStatus(data.object.TicketsList[0].status);
+
 					var ticket = data.object.TicketsList[0];
 					$("#QueryDate").text(ticket.createdAt.substring(0, 10));
 					$("#QueryContent").text(ticket.query);
@@ -46,6 +48,29 @@
 				},
 				error: function (error) { console.log("Error : ", `Error ${error}`); }
 			});
+		}
+	}
+
+	function updateStatus(status){
+		switch (status) {
+			case "OPEN":
+				$("#open-status").removeClass("open-status");
+				$("#open-status").addClass("open-status-active");				
+				break;
+			case "INPROGRESS":
+				inprogress-status -active
+				$("#inprogress-status").removeClass("inprogress-status");
+				$("#inprogress-status").addClass("inprogress-status-active");
+				break;
+			case "CLOSED":
+				closed-status -active
+				$("#closed-status").removeClass("closed-status");
+				$("#closed-status").addClass("closed-status-active");
+				break;		
+			default:
+				$("#open-status").removeClass("open-status");
+				$("#open-status").addClass("open-status-active");
+				break;
 		}
 	}
 

@@ -123,7 +123,6 @@ label.error {
     text-align: center;
 }
 
-
 .contactMedium {
     align-items: center;
     padding: 10% 7% 8% 6%;
@@ -211,10 +210,14 @@ label.error {
 
 .head-title {
 	height: 100px;
-    width: 65%;
+    width: 100%;
     float: left;
-    padding-top: 25px;
+  }
+
+.head-title img{
+  height: 15px;
 }
+
 .head-logo {
 	height: 100px;
     width: 35%;
@@ -654,7 +657,56 @@ ul > li > a:hover {
   text-align: left;
   padding-top: 11px; 
 }
+
 .float-upload_img-child-right-element span{
   color: #267af7;
     font-size: 12px;
+}
+
+.ticket-float-child-element {
+  float: left;
+  width: 50%;
+}
+
+.ticket-back-float-child-element {
+  float: left;
+  width: 20%; 
+  height: 51px; 
+  text-align: right;
+}
+
+.open-status{
+  width:33%; 
+  background-color: #bf9094!important;
+}
+
+.open-status-active{
+  width:33%; 
+  background-color: #dc3545!important;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.inprogress-status{
+  width:33%; 
+  background-color: #dbc993!important;
+}
+
+.inprogress-status-active{
+  width:33%; 
+  background-color: #ffc107!important;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.closed-status{
+  width:34%;
+  background-color: #a8c7af!important; 
+}
+
+.closed-status-active{
+  width:34%;
+  background-color: #28a745!important; 
+  font-size: 0.8rem;
+  font-weight: bold;
 }
