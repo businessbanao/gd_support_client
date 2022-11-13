@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
@@ -13,6 +14,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="css/style.css">
     <title>GD Support | Home</title>
+
   </head>
   <body>
     <!-- ======= Header ======= -->
@@ -65,20 +67,16 @@
                   <div class="row">
                     <div class="float-parent-element">
                       <div class="col-md-5 float-child-element">
-                        <div class="contactMedium createQuery" data-type="call">
+                        <a href="tel:+919821008428" class="contactMedium" onclick="createTicket('call')">
                           <i class="fa fa-phone"></i>
-                          <p>
-                            <a href="tel:+919821008428">Call Now</a>
-                          </p>
-                        </div>
+                            <span class="contactAction">Call Now</span>
+                        </a>
                       </div>
                       <div class="col-md-5 float-child-element">
-                        <div class="contactMedium createQuery" data-type="email">
+                        <a href="mailto: support@godrazy.com" class="contactMedium" onclick="createTicket('email')">
                           <i class="fa fa-envelope"></i>
-                          <p>
-                            <a href="mailto: support@godrazy.com">Send Email</a>
-                          </p>
-                        </div>
+                          <span class="contactAction">Send Email</span>                          
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -97,11 +95,17 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-12 form-group" id="attachmentHolder"></div>
+                    <div class="col-md-12 form-group" id="attachmentHolder">
+                       <div class="attachmentBlock">
+                        <button class="close" onclick="removeattachment(event)"><span>&times;</span></button>
+                        <img src="images/gd-logo.png" id="profile-img-tag" width="50px" style="margin-left:12px" height="50px"/>
+                      </div> 
+                    </div>
+                    <div class="loader"></div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <button class="btn btn-primary rounded-0 py-2 px-4 createQuery" data-type="query">Submit Query</button>
+                      <button class="btn btn-primary rounded-0 py-2 px-4" onclick="createTicket('query')">Submit Query</button>
                       <span class="submitting"></span>
                     </div>
                   </div>
@@ -117,13 +121,10 @@
     </div>
     <div class="queryContainer">
       <span class="queryHeading">My Queries</span>
-      <!--<hr class="header-hr">-->
       <table class="table table-responsive-xl">
         <tbody id="queryListContainer"></tbody>
       </table>
-      <div id="norecordfound">
-        <!-- <img src="images/norecordfound.png" alt="Go Drazy" class="img-fluid"> -->
-      </div>
+      <div id="norecordfound"></div>
 
     </div>
     <script src="js/jquery.min.js"></script>

@@ -1,5 +1,3 @@
-!(function ($) {
-
 	/******************************************************************/
 	/************************* common code ****************************/
 	/******************************************************************/
@@ -17,7 +15,7 @@
 
 	/***** constants start *****/
 	const protocal = "http";
-	const host = "54.210.61.230";
+	const host = "54.210.61.230"; //"localhost";
 	const port = "3500";
 	const baseUrl = `${protocal}://${host}:${port}/`;
 
@@ -70,95 +68,88 @@
 	}
 
 	function createTicket(contactMedium) {
+		alert("ddddd");
 		if (($("#file")[0]).files.length > 3) {
 			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
 			$("#form-message-warning").show();
 		} else {
 			var custId = localStorage.getItem("custId");
 			var formData;
-			var isCreated = false;
 			if (contactMedium == "call") {
-				formData = { query: "", contactMedium: "call", status: "OPEN", docUrl: "" };
+				formData = { query: "", contactMedium: "call", status: "OPEN" };
 			} else if (contactMedium == "email") {
-				formData = { query: "", contactMedium: "email", status: "OPEN", docUrl: "" };
+				formData = { query: "", contactMedium: "email", status: "OPEN" };
 			} else if (contactMedium == "query") {
-				var custQuery = $("#query").val();
-				formData = { query: custQuery, contactMedium: "query", status: "OPEN", docUrl: imgArr };
+				formData = { query:"dmo1", contactMedium:"query", status: "OPEN" };
 			}
 			$.ajax({
 				url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
 				type: "POST",
 				data: formData,
 				success: function (data, textStatus, jqXHR) {
-					// show toaster
+					console.log("success");
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					// show toaster
+					console.log("fail");
 				}
 			});
 		}
 	}
 
 
-	let imgArr = [];
+	
 	function uploadImage(event) {
-
+		let imgArr = [];
 		if (imgArr.length > 3) {
-			// ($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
-			// $("#form-message-warning").show();
-			// setTimeout(() => {
-			// 	$("#form-message-warning").hide();
-			// }, 5000);
-
-
-			// show toaster
+			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
+			$("#form-message-warning").show();
+			setTimeout(() => {
+				$("#form-message-warning").hide();
+			}, 5000);
+			//TODO :  show toaster
 			return;
-		}
+		} else {
+			$(".loader").show();
+			let authorizationToken = localStorage.getItem("authToken") || ''
+			let fileObj = event.target.files ? event.target.files[0] : {};
+	
+			let formData = new FormData();
+			formData.append("photo", fileObj);
+	
+			$.ajax({
+				url: `${baseUrl}api/v1/Admin/saveAllImages`,
+				type: "POST",
+				beforeSend: function (request) {
+					request.setRequestHeader("__authorization_x_token", authorizationToken);
+				},
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function (data, textStatus, jqXHR) {
+					$(".loader").hide();
+					let url = data.object.s3Url;
+					imgArr.push(url);
+					for (let i = 0; i < imgArr.length; i++) {
+						$('<div class="attachmentBlock">'+
+                        '<button type="submit" class="close"><span>&times;</span></button>'+
+                        '<img src="' + imgArr[i] + '" id="profile-img-tag" width="50px" style="margin-left:12px" height="50px"/>'+
+                      	'</div>').appendTo("#attachmentHolder");
 
-		let authorizationToken = localStorage.getItem("authToken") || ''
-		let fileObj = event.target.files ? event.target.files[0] : {};
-
-		let formData = new FormData();
-		formData.append("photo", fileObj);
-
-		$.ajax({
-			url: `${baseUrl}api/v1/Admin/saveAllImages`,
-			type: "POST",
-			beforeSend: function (request) {
-				request.setRequestHeader("__authorization_x_token", authorizationToken);
-			},
-			data: formData,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function (data, textStatus, jqXHR) {
-
-				let url = data.object.s3Url;
-
-				imgArr.push(url)
-
-
-
-				for (let i = 0; i < imgArr.length; i++) {
-					$('<img src="' + imgArr[i] + '" id="profile-img-tag" width="50px" style="margin-left:12px" height="50px"/>').appendTo("#attachmentHolder");
+						// $('<button type="submit" class="close AClass">'+
+						// '<span>&times;</span>'+
+					 	// '</button><img src="' + imgArr[i] + '" id="profile-img-tag" width="50px" style="margin-left:12px" height="50px"/>').appendTo("#attachmentHolder");
+					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					$(".loader").hide();
 				}
-
-				// ($("#attachmentHolder")[0]).innerHTML = "More than 3 attachments not allowed.";
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				//error
-			}
-		});
+			});
+		}
 	}
 
-
-	$(document).on('click', '.createQuery', function (e) {
-		var contactMedium = $(this).data("type");
-		createTicket(contactMedium);
-	});
-
 	$(document).on('change', '#file', function (e) {
-		uploadImage(e)
+		uploadImage(e);
 		$("#attachmentHolder").html('');
 		if (($("#file")[0]).files.length > 3) {
 			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
@@ -169,10 +160,15 @@
 		}
 	});
 
-
-
-	if (isAuthorised) {
-		getTickets();
+	function removeattachment(event){
+		alert("called delete img");
 	}
 
-})(jQuery);
+	// $(document).ready(function () {
+	// 	alert("loaded");
+	// 	getTickets();
+	// });
+
+	// if (isAuthorised) {
+	// 	getTickets();
+	// }

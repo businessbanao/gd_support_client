@@ -114,25 +114,19 @@ label.error {
   font-size: 12px;
   color: #000; }
   
-  
-  
-  
-  
-  
-  
 .float-parent-element { 
     width: 100%; 
 } 
 .float-child-element { 
     float: left; 
     width: 50%; 
+    text-align: center;
 }
 
 
 .contactMedium {
     align-items: center;
-    padding-top: 2%;
-    padding-left: 10%;
+    padding: 10% 7% 8% 6%;
     border-top-style: solid;
     border-top-width: thick;
     border-top-color: #7f8ecd;
@@ -143,7 +137,6 @@ label.error {
 }
 .contactMedium i{
 	margin-top: 11px;
-	margin-left: 31%;
 	font-size:32px;
 }
 .contactMedium p{
@@ -594,4 +587,43 @@ ul > li > a:hover {
   margin-left: 5px;
   font-size: 15px;
   color: #7a6464;
+}
+
+.contactAction{
+  margin-left: 5px
+}
+
+.loader {
+  display: none;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.attachmentBlock{
+    width: 80px;
+    border-radius: 10px;
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+.attachmentBlock img{
+    margin-top: 5px;
+    vertical-align: middle;
+    border-style: none;
 }
