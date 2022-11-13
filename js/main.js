@@ -133,7 +133,7 @@
 					for (let i = 0; i < imgArr.length; i++) {
 						$('<div class="attachmentBlock">'+
                         '<button type="submit" class="close"><span>&times;</span></button>'+
-                        '<img src="' + imgArr[i] + '" id="profile-img-tag" width="50px" style="margin-left:12px" height="50px"/>'+
+                        '<img src="' + imgArr[i] + '" width="50px" style="margin-left:12px" height="50px"/>'+
                       	'</div>').appendTo("#attachmentHolder");
 
 						// $('<button type="submit" class="close AClass">'+
@@ -161,7 +161,7 @@
 	});
 
 	function removeattachment(event){
-		alert("called delete img");
+		event.target.parentElement.parentElement.remove();
 	}
 
 	// $(document).ready(function () {
