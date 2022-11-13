@@ -627,3 +627,34 @@ ul > li > a:hover {
     vertical-align: middle;
     border-style: none;
 }
+
+.requiredField{
+    border: solid;
+    border-color: red;
+}
+
+.requiredFieldLabel{
+  display: none;
+  color: red;
+  font-size: 11px;
+}
+.upload_img_button{
+  cursor: pointer;
+  height: 50px;
+  width: 55px;
+}
+.float-upload_img-child-left-element{
+  float: left; 
+  width: 20%; 
+  text-align: right; 
+}
+.float-upload_img-child-right-element{
+  float: left; 
+  width: 70%; 
+  text-align: left;
+  padding-top: 11px; 
+}
+.float-upload_img-child-right-element span{
+  color: #267af7;
+    font-size: 12px;
+}

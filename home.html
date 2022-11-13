@@ -63,7 +63,6 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <form class="mb-5" method="post" id="contactForm" name="contactForm">
                   <div class="row">
                     <div class="float-parent-element">
                       <div class="col-md-5 float-child-element">
@@ -86,34 +85,35 @@
                       <br>
                       <span style="color: #4f4964;">Please submit the form below, We will get back to you soon.</span>
                       <br><br>
+                      <span class="requiredFieldLabel">* Please write your issue</span>
                       <textarea class="form-control" name="message" id="query" cols="30" rows="7" placeholder="Write your problem here..."></textarea>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-12 form-group">
-                      <input type="file" class="form-control" name="file" id="file" placeholder="file" style="margin: .4rem 0; background: none;" multiple="true">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12 form-group" id="attachmentHolder">
-                       <!-- <div class="attachmentBlock">
-                        <button class="close" onclick="removeattachment(event)"><span>&times;</span></button>
-                        <img src="images/gd-logo.png" id="profile-img-tag" width="50px" style="margin-left:12px" height="50px"/>
-                      </div>  -->
-                    </div>
+                    <div class="col-md-12 form-group" id="attachmentHolder"></div>
                     <div class="loader"></div>
                   </div>
+                  <div class="row">
+                    <div class="float-parent-element">
+                      <div class="col-md-5 float-upload_img-child-left-element">
+                        <input type="file" class="form-control" name="file" id="file" placeholder="file" style="margin: .4rem 0; background: none; display:none;"  accept="image/*">
+                        <img src="images/upload_img.jpg" id="upfile" class="upload_img_button" style="cursor:pointer" />
+                      </div>
+                      <div class="col-md-5 float-upload_img-child-right-element">
+                        <span>upload screen-shot of your issue</span>                          
+                      </div>
+                    </div>
+                  </div> <br>           
                   <div class="row">
                     <div class="col-12">
                       <button class="btn btn-primary rounded-0 py-2 px-4" onclick="createTicket('query')">Submit Query</button>
                       <span class="submitting"></span>
                     </div>
                   </div>
-                </form>
                 <div id="form-message-success"> Query submitted successfully. </div>
                 <div id="form-message-warning"> Query submission failed! </div>
               </div>
-            </div>
+            </div> <br>
             <hr class="seperator">
           </div>
         </div>

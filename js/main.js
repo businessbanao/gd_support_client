@@ -68,36 +68,44 @@
 	}
 
 	function createTicket(contactMedium) {
-		alert("ddddd");
-		if (($("#file")[0]).files.length > 3) {
+		if($("#query").val() == '') {
+			$("#query").addClass("requiredField");
+			$(".requiredFieldLabel").show();
+			return;
+		} else {
+			$("#query").removeClass("requiredField");
+			$(".requiredFieldLabel").hide();
+		} 
+
+		if(($("#file")[0]).files.length > 3) {
 			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
 			$("#form-message-warning").show();
-		} else {
-			var custId = localStorage.getItem("custId");
-			var formData;
-			if (contactMedium == "call") {
-				formData = { query: "", contactMedium: "call", status: "OPEN" };
-			} else if (contactMedium == "email") {
-				formData = { query: "", contactMedium: "email", status: "OPEN" };
-			} else if (contactMedium == "query") {
-				formData = { query:"dmo1", contactMedium:"query", status: "OPEN" };
-			}
-			$.ajax({
-				url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
-				type: "POST",
-				data: formData,
-				success: function (data, textStatus, jqXHR) {
-					console.log("success");
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("fail");
-				}
-			});
+			return;
+		}		
+
+		var custId = localStorage.getItem("custId");
+		var formData;
+		if (contactMedium == "call") {
+			formData = { query: "", contactMedium: "call", status: "OPEN" };
+		} else if (contactMedium == "email") {
+			formData = { query: "", contactMedium: "email", status: "OPEN" };
+		} else if (contactMedium == "query") {
+			formData = { query:"dmo1", contactMedium:"query", status: "OPEN" };
 		}
+		$.ajax({
+			url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
+			type: "POST",
+			data: formData,
+			success: function (data, textStatus, jqXHR) {
+				console.log("success");
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("fail");
+			}
+		});
+		
 	}
 
-
-	
 	function uploadImage(event) {
 		let imgArr = [];
 		if (imgArr.length > 3) {
@@ -135,10 +143,6 @@
                         '<button type="submit" class="close"><span>&times;</span></button>'+
                         '<img src="' + imgArr[i] + '" width="50px" style="margin-left:12px" height="50px"/>'+
                       	'</div>').appendTo("#attachmentHolder");
-
-						// $('<button type="submit" class="close AClass">'+
-						// '<span>&times;</span>'+
-					 	// '</button><img src="' + imgArr[i] + '" id="profile-img-tag" width="50px" style="margin-left:12px" height="50px"/>').appendTo("#attachmentHolder");
 					}
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -160,14 +164,17 @@
 		}
 	});
 
+	$("#upfile").click(function () {
+		$("#file").trigger('click');
+	});
+
 	function removeattachment(event){
 		event.target.parentElement.parentElement.remove();
 	}
 
-	// $(document).ready(function () {
-	// 	alert("loaded");
-	// 	getTickets();
-	// });
+	$(document).ready(function () {
+		getTickets();
+	});
 
 	// if (isAuthorised) {
 	// 	getTickets();
