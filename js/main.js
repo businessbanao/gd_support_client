@@ -53,7 +53,7 @@
 								'<span class="' + status + '">' + (ticketArray[i]).status + '</span>' +
 								'</td>' +
 								'<td>' +
-								'<a class="far fa-eye" href="ticket.html?ticketId=' + (ticketArray[i])._id + '"></a>' +
+								'<a class="far fa-eye" style="box-shadow: 1px 1px 25px #8586b994;" href="ticket.html?ticketId=' + (ticketArray[i])._id + '"></a>' +
 								'</td>';
 							'</tr>';
 						}

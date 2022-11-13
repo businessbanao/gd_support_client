@@ -130,6 +130,8 @@ label.error {
     border-top-width: thick;
     border-top-color: #7f8ecd;
     background: #fcfdfd;
+    border-radius: 5px;
+    /* box-shadow: 3px 3px 9px #8586b961; */
 }
 .contactMedium h5{
 	margin-left: 17%
@@ -709,4 +711,8 @@ ul > li > a:hover {
   background-color: #28a745!important; 
   font-size: 0.8rem;
   font-weight: bold;
+}
+
+.shadow{
+  box-shadow: 3px 3px 9px #8586b961;
 }
