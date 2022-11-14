@@ -15,7 +15,7 @@
 
 	/***** constants start *****/
 	const protocal = "http";
-	const host = "54.210.61.230"; //"localhost";
+	const host = "54.210.61.230"; //"localhost"; //
 	const port = "3500";
 	const baseUrl = `${protocal}://${host}:${port}/`;
 
@@ -59,7 +59,7 @@
 						}
 						document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
 					} else {
-						$("#norecordfound").html('<img src="images/norecordfound.png" alt="Go Drazy" class="img-fluid">');
+						$("#norecordfound").html('<img src="images/norecordfound.jpg" alt="Go Drazy" class="img-fluid">');
 					}
 				},
 				error: function (error) { console.log("Error : ", `Error ${error}`); }
@@ -90,7 +90,7 @@
 		} else if (contactMedium == "email") {
 			formData = { query: "", contactMedium: "email", status: "OPEN" };
 		} else if (contactMedium == "query") {
-			formData = { query:"dmo1", contactMedium:"query", status: "OPEN" };
+			formData = { query:$("#query").val(), contactMedium:"query", status: "OPEN", docUrl:["333", "222", "111"] };
 		}
 		$.ajax({
 			url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
@@ -106,8 +106,8 @@
 		
 	}
 
+	let imgArr = [];
 	function uploadImage(event) {
-		let imgArr = [];
 		if (imgArr.length > 3) {
 			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
 			$("#form-message-warning").show();
@@ -135,12 +135,13 @@
 				contentType: false,
 				processData: false,
 				success: function (data, textStatus, jqXHR) {
+					showToast();
 					$(".loader").hide();
 					let url = data.object.s3Url;
 					imgArr.push(url);
 					for (let i = 0; i < imgArr.length; i++) {
 						$('<div class="attachmentBlock">'+
-                        '<button type="submit" class="close"><span>&times;</span></button>'+
+                        '<button type="submit" class="close" onclick="removeattachment(event)"><span>&times;</span></button>'+
                         '<img src="' + imgArr[i] + '" width="50px" style="margin-left:12px" height="50px"/>'+
                       	'</div>').appendTo("#attachmentHolder");
 					}
@@ -171,6 +172,27 @@
 	function removeattachment(event){
 		event.target.parentElement.parentElement.remove();
 	}
+
+	$("#myToastBtn").click(function(){
+		$("#myToast").toast("show");
+	});
+
+	// $(".myToastBtn").click(function(){
+	// 	$("#myToast").toast("show");
+	// });
+
+	// $("#myToast").toast("hide");
+	// $("#hideBtn").click(function(){
+	//     $("#myToast").toast("hide");
+	// });
+
+	// $("#disposeBtn").click(function(){
+	//     $("#myToast").toast("dispose");
+	// });
+
+	function showToast(){
+		$("#myToast").toast("show");
+	};
 
 	$(document).ready(function () {
 		getTickets();

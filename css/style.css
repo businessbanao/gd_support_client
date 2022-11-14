@@ -590,7 +590,6 @@ ul > li > a:hover {
 
 .queryHeading{
   margin-left: 5px;
-  font-size: 15px;
   color: #7a6464;
 }
 
@@ -599,10 +598,14 @@ ul > li > a:hover {
 }
 
 .loader {
+  margin: 3% 0% 3% 40%;
   display: none;
   border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
+  border-radius: 20%;
+  border-top: 16px groove #3498db;
+  border-bottom: 16px groove #3498db;
+  border-left: 16px solid white;
+  border-right: 16px solid white;
   width: 50px;
   height: 50px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
@@ -655,7 +658,7 @@ ul > li > a:hover {
 }
 .float-upload_img-child-right-element{
   float: left; 
-  width: 70%; 
+  width: 80%; 
   text-align: left;
   padding-top: 11px; 
 }
