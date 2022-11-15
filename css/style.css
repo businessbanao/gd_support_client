@@ -58,7 +58,7 @@ a {
 }
   
 .btn.btn-primary {
-    background: #647de8;
+    background: #0083be;
     color: #fff;
     padding: 15px 20px; 
 	margin-left: 25%;
@@ -128,7 +128,7 @@ label.error {
     padding: 10% 7% 8% 6%;
     border-top-style: solid;
     border-top-width: thick;
-    border-top-color: #7f8ecd;
+    border-top-color: #0083be;
     background: #fcfdfd;
     border-radius: 5px;
     /* box-shadow: 3px 3px 9px #8586b961; */
@@ -149,11 +149,11 @@ label.error {
 	color : #8c8c8c
 }
 .contactMedium p a:hover, i:hover{
-	color : #647de8
+	color : #0083be
 }
 
 .contactMedium p:hover{
-	color : #647de8
+	color : #0083be
 }
 .active {
     padding-left: 6px;
@@ -264,7 +264,7 @@ a {
 }
 
 ul > li > a:hover {
-  color: #5250b9;
+  color: #0083be;
   text-decoration: none;
 }
 
@@ -415,7 +415,7 @@ ul > li > a:hover {
   font-size: 14px;
   font-weight: 500;
   text-transform: none;
-  color: #3e6f9b;
+  color: #0083be;
 }
 
 .nav-menu .drop-down ul a:hover, .nav-menu .drop-down ul .active > a, .nav-menu .drop-down ul li:hover > a {
@@ -479,7 +479,7 @@ ul > li > a:hover {
 }
 
 .mobile-nav-toggle i {
-  color: #7992ed;
+  color: #0083be;
   font-size: 40px;
   margin-right: 5px
 }
@@ -594,7 +594,7 @@ ul > li > a:hover {
 }
 
 .contactAction{
-  margin-left: 5px
+  margin-left: 5px;
 }
 
 .loader {
@@ -602,13 +602,13 @@ ul > li > a:hover {
   display: none;
   border: 16px solid #f3f3f3;
   border-radius: 20%;
-  border-top: 16px groove #3498db;
-  border-bottom: 16px groove #3498db;
+  border-top: 16px groove #0083be;
+  border-bottom: 16px groove #0083be;
   border-left: 16px solid white;
   border-right: 16px solid white;
   width: 50px;
   height: 50px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
+  -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
 
@@ -664,7 +664,7 @@ ul > li > a:hover {
 }
 
 .float-upload_img-child-right-element span{
-  color: #267af7;
+  color: #0083be;
     font-size: 12px;
 }
 
@@ -718,4 +718,10 @@ ul > li > a:hover {
 
 .shadow{
   box-shadow: 3px 3px 9px #8586b961;
+}
+
+.float-upload_img-child-right-element .name {
+  color: #0083be;
+  margin-left: 6px;
+  font-size: 29px;
 }

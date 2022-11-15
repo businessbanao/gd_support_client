@@ -68,42 +68,50 @@
 	}
 
 	function createTicket(contactMedium) {
+		if(validateForm()){
+			var custId = localStorage.getItem("custId");
+			var formData;
+			if (contactMedium == "call") {
+				formData = { query: "", contactMedium: "call", status: "OPEN" };
+			} else if (contactMedium == "email") {
+				formData = { query: "", contactMedium: "email", status: "OPEN" };
+			} else if (contactMedium == "query") {
+				formData = { query:$("#query").val(), contactMedium:"query", status: "OPEN", docUrl:["333", "222", "111"] };
+			}
+			$.ajax({
+				url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
+				type: "POST",
+				data: formData,
+				success: function (data, textStatus, jqXHR) {
+					console.log("success");
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log("fail");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+
+	function validateForm(){
+		var isValid = false;
 		if($("#query").val() == '') {
 			$("#query").addClass("requiredField");
 			$(".requiredFieldLabel").show();
-			return;
+			isValid = false;
 		} else {
 			$("#query").removeClass("requiredField");
 			$(".requiredFieldLabel").hide();
-		} 
+			isValid = true;
+		}
 
 		if(($("#file")[0]).files.length > 3) {
 			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
 			$("#form-message-warning").show();
-			return;
-		}		
-
-		var custId = localStorage.getItem("custId");
-		var formData;
-		if (contactMedium == "call") {
-			formData = { query: "", contactMedium: "call", status: "OPEN" };
-		} else if (contactMedium == "email") {
-			formData = { query: "", contactMedium: "email", status: "OPEN" };
-		} else if (contactMedium == "query") {
-			formData = { query:$("#query").val(), contactMedium:"query", status: "OPEN", docUrl:["333", "222", "111"] };
+			isValid = false;
 		}
-		$.ajax({
-			url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
-			type: "POST",
-			data: formData,
-			success: function (data, textStatus, jqXHR) {
-				console.log("success");
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("fail");
-			}
-		});
-		
+		return isValid; 
 	}
 
 	let imgArr = [];
