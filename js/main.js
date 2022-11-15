@@ -18,6 +18,7 @@
 	const host = "localhost"; //"54.210.61.230";
 	const port = "3500";
 	const baseUrl = `${protocal}://${host}:${port}/`;
+	const tickerLimit = 10
 
 	/***** constants end *****/
 
@@ -28,7 +29,7 @@
 
 		if (custExist) {
 			$.ajax({
-				url: `${baseUrl}api/v1/admin/support/getTickets?customerId=${custId}`,
+				url: `${baseUrl}api/v1/admin/support/getTickets/0/${tickerLimit}?customerId=${custId}`,
 				type: "GET",
 				success: function (data) {
 					var ticketArray = data.object.TicketsList.filter(e => e.contactMedium == 'query');
