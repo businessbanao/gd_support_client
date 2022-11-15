@@ -24,6 +24,7 @@
 	/***** variables end *****/
 	let imgArr = [];
 	let skipCount = 0;
+	let queryType = "";
 	/***** variables end *****/
 
 	function getTickets() {
@@ -82,6 +83,7 @@
 	}
 
 	function createTicket(contactMedium) {
+		queryType = contactMedium;
 		if(validateForm()){
 			var custId = localStorage.getItem("custId");
 			var formData;
@@ -110,21 +112,26 @@
 
 	function validateForm(){
 		var isValid = false;
-		if($("#query").val() == '') {
-			$("#query").addClass("requiredField");
-			$(".requiredFieldLabel").show();
-			isValid = false;
+		if(queryType == "query"){
+			if($("#query").val() == '') {
+				$("#query").addClass("requiredField");
+				$(".requiredFieldLabel").show();
+				isValid = false;
+			} else {
+				$("#query").removeClass("requiredField");
+				$(".requiredFieldLabel").hide();
+				isValid = true;
+			}
+	
+			if(($("#file")[0]).files.length > 3) {
+				($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
+				$("#form-message-warning").show();
+				isValid = false;
+			}
 		} else {
-			$("#query").removeClass("requiredField");
-			$(".requiredFieldLabel").hide();
 			isValid = true;
 		}
 
-		if(($("#file")[0]).files.length > 3) {
-			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
-			$("#form-message-warning").show();
-			isValid = false;
-		}
 		return isValid; 
 	}
 

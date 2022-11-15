@@ -726,7 +726,9 @@ ul > li > a:hover {
   font-size: 29px;
 }
 
-
+/*--------------------------------------------------
+Pagination : page no
+--------------------------------------------------*/
 .pagination {
   display: inline-block;
   margin: 15px 0px 15px 0px;
