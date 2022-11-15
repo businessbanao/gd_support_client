@@ -18,9 +18,13 @@
 	const host = "localhost"; //"54.210.61.230";
 	const port = "3500";
 	const baseUrl = `${protocal}://${host}:${port}/`;
-	const tickerLimit = 10
-
+	const tickerLimit = 10;
 	/***** constants end *****/
+
+	/***** variables end *****/
+	let imgArr = [];
+	let skipCount = 0;
+	/***** variables end *****/
 
 	function getTickets() {
 		var custId = localStorage.getItem("custId");
@@ -29,9 +33,11 @@
 
 		if (custExist) {
 			$.ajax({
-				url: `${baseUrl}api/v1/admin/support/getTickets/0/${tickerLimit}?customerId=${custId}`,
+				url: `${baseUrl}api/v1/admin/support/getTickets/${skipCount}/${tickerLimit}?customerId=${custId}`,
 				type: "GET",
 				success: function (data) {
+					// Empty the container
+					$('#queryListContainer').html('')
 					var ticketArray = data.object.TicketsList.filter(e => e.contactMedium == 'query');
 
 					if (undefined != ticketArray && ticketArray.length > 0) {
@@ -66,6 +72,13 @@
 				error: function (error) { console.log("Error : ", `Error ${error}`); }
 			});
 		} else { document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', "Admin does not exist."); }
+	}
+
+	function getTicketsForPage(event, pageNumber){
+		skipCount = parseInt(pageNumber-1)*10;
+		getTickets();
+		$(".pagination a").removeClass("active")
+		$(event.target).addClass("active");
 	}
 
 	function createTicket(contactMedium) {
@@ -115,7 +128,6 @@
 		return isValid; 
 	}
 
-	let imgArr = [];
 	function uploadImage(event) {
 		if (imgArr.length > 3) {
 			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
