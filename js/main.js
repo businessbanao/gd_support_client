@@ -15,7 +15,7 @@
 
 	/***** constants start *****/
 	const protocal = "http";
-	const host = "54.210.61.230"; //"localhost"; //
+	const host = "localhost"; //"54.210.61.230";
 	const port = "3500";
 	const baseUrl = `${protocal}://${host}:${port}/`;
 
@@ -28,7 +28,7 @@
 
 		if (custExist) {
 			$.ajax({
-				url: `${baseUrl}api/v1/admin/support/getTickets?customerId1=${custId}`,
+				url: `${baseUrl}api/v1/admin/support/getTickets?customerId=${custId}`,
 				type: "GET",
 				success: function (data) {
 					var ticketArray = data.object.TicketsList.filter(e => e.contactMedium == 'query');

@@ -14,8 +14,13 @@
 	/******************************************************************/
 	/************************** TICKET DETAIL *************************/
 	/******************************************************************/
-	const baseUrl = "http://54.210.61.230:3500/";
-	// const host = "localhost";//"54.210.61.230";
+	/***** constants start *****/
+	const protocal = "http";
+	const host = "localhost"; //"54.210.61.230";
+	const port = "3500";
+	const baseUrl = `${protocal}://${host}:${port}/`;
+
+	/***** constants end *****/
 
 	function getParameterByName(name, url = window.location.href) {
 		name = name.replace(/[\[\]]/g, '\\$&');
