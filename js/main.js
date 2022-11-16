@@ -46,6 +46,7 @@
 						var status;
 
 						for (var i = 0; i < ticketArray.length; i++) {
+							elm = '';
 							if ((ticketArray[i]).status == 'OPEN') { status = 'active'; }
 							else if ((ticketArray[i]).status == 'INPROGRESS') { status = 'waiting'; }
 							elm += '<tr>' +
@@ -64,8 +65,8 @@
 								'<a class="far fa-eye" style="box-shadow: 1px 1px 25px #8586b994;" href="ticket.html?ticketId=' + (ticketArray[i])._id + '"></a>' +
 								'</td>';
 							'</tr>';
+							document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
 						}
-						document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
 					} else {
 						$("#norecordfound").html('<img src="images/norecordfound.jpg" alt="Go Drazy" class="img-fluid">');
 					}
@@ -99,10 +100,10 @@
 				type: "POST",
 				data: formData,
 				success: function (data, textStatus, jqXHR) {
-					console.log("success");
+					showToast("ticketCreated", data.object.Message, data.object.ticket._id);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("fail");
+					showToast("ticketCreationFaild", "", "");
 				}
 			});
 		} else {
@@ -163,7 +164,6 @@
 				contentType: false,
 				processData: false,
 				success: function (data, textStatus, jqXHR) {
-					showToast();
 					$(".loader").hide();
 					let url = data.object.s3Url;
 					imgArr.push(url);
@@ -202,8 +202,30 @@
 	}
 
 	$("#myToastBtn").click(function(){
-		$("#myToast").toast("show");
+		document.getElementById("createQueryFailToast").style.zIndex = "10000";
+		$("#createQueryFailToast").toast("show"); 
 	});
+
+	function showToast(actionResp, toastMessage, ticketId){
+		if(actionResp == "ticketCreated"){
+			document.getElementById("createQuerySuccessToast").style.zIndex = "10000";
+			$("#createQuerySuccessToastmessage").text(toastMessage);
+			$("#createQuerySuccessToastClick").attr("href", "ticket.html?ticketId="+ticketId);
+			$("#createQuerySuccessToast").toast("show");
+		} else if(actionResp == "ticketCreationFaild"){
+			document.getElementById("createQueryFailToast").style.zIndex = "10000";
+			$("#createQueryFailToast").toast("show");
+		}
+
+
+	};
+
+	function closeToast(event){
+		(event.target.parentElement.parentElement).style.zIndex = -1;
+	}
+	// $("#createQuerySuccessToast").click(function(event){
+	// 	document.getElementById("createQuerySuccessToast").style.zIndex = "-1";
+	// });
 
 	// $(".myToastBtn").click(function(){
 	// 	$("#myToast").toast("show");
@@ -217,10 +239,6 @@
 	// $("#disposeBtn").click(function(){
 	//     $("#myToast").toast("dispose");
 	// });
-
-	function showToast(){
-		$("#myToast").toast("show");
-	};
 
 	$(document).ready(function () {
 		getTickets();
