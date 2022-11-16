@@ -48,7 +48,6 @@
 					var docUrls = ticket.docUrl;
 					for (var i = 0; i < docUrls.length; i++) {
 						$("#queryAttachment").html('<img src="' + docUrls[i] + '" alt="Interior Design Work" style="height: 200px; margin-left:10px;"></img>');
-						//$("#queryAttachment").html('<img src="images/query1.jpg" alt="'+Ticket Attachment+'" style="height: 200px; margin-left:10px;"></img>');
 					}
 				},
 				error: function (error) { console.log("Error : ", `Error ${error}`); }

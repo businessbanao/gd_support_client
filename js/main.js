@@ -18,23 +18,23 @@
 	const host = "localhost"; //"54.210.61.230";
 	const port = "3500";
 	const baseUrl = `${protocal}://${host}:${port}/`;
-	const tickerLimit = 10;
+	const ticketLimit = 10;
+	const pageBatchSize = 5;
 	/***** constants end *****/
 
 	/***** variables end *****/
 	let imgArr = [];
-	let skipCount = 0;
 	let queryType = "";
 	/***** variables end *****/
 
-	function getTickets() {
+	function getTickets(skipCount) {
 		var custId = localStorage.getItem("custId");
 		var custExist = false;
 		if (custId != null && custId != undefined && custId != "") { custExist = true; }
 
 		if (custExist) {
 			$.ajax({
-				url: `${baseUrl}api/v1/admin/support/getTickets/${skipCount}/${tickerLimit}?customerId=${custId}`,
+				url: `${baseUrl}api/v1/admin/support/getTickets/${skipCount}/${ticketLimit}?customerId=${custId}`,
 				type: "GET",
 				success: function (data) {
 					// Empty the container
@@ -67,6 +67,11 @@
 							'</tr>';
 							document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
 						}
+
+						if(skipCount == 0){
+							updatePageNo(data.object.totalTickets, skipCount);
+						}
+
 					} else {
 						$("#norecordfound").html('<img src="images/norecordfound.jpg" alt="Go Drazy" class="img-fluid">');
 					}
@@ -78,7 +83,7 @@
 
 	function getTicketsForPage(event, pageNumber){
 		skipCount = parseInt(pageNumber-1)*10;
-		getTickets();
+		getTickets(skipCount);
 		$(".pagination a").removeClass("active")
 		$(event.target).addClass("active");
 	}
@@ -201,11 +206,6 @@
 		event.target.parentElement.parentElement.remove();
 	}
 
-	$("#myToastBtn").click(function(){
-		document.getElementById("createQueryFailToast").style.zIndex = "10000";
-		$("#createQueryFailToast").toast("show"); 
-	});
-
 	function showToast(actionResp, toastMessage, ticketId){
 		if(actionResp == "ticketCreated"){
 			document.getElementById("createQuerySuccessToast").style.zIndex = "10000";
@@ -223,27 +223,27 @@
 	function closeToast(event){
 		(event.target.parentElement.parentElement).style.zIndex = -1;
 	}
-	// $("#createQuerySuccessToast").click(function(event){
-	// 	document.getElementById("createQuerySuccessToast").style.zIndex = "-1";
-	// });
 
-	// $(".myToastBtn").click(function(){
-	// 	$("#myToast").toast("show");
-	// });
+	function updatePageNo(totalTickets, skipCount){
+		var totalPages = 0; 
+		var wholePages =  Math.trunc(totalTickets/10);
+		var remainPages = totalTickets%10 > 0 ? 1 : 0;
+		totalPages = wholePages + remainPages;
+		var activeClass = "";
+		var currentPage = (skipCount/10)+1;
+		var initialPage = currentPage < pageBatchSize ? 1 : (Math.trunc(currentPage/pageBatchSize)*pageBatchSize)+1;
+		var lastPage = currentPage < pageBatchSize ? pageBatchSize : (initialPage + pageBatchSize) - 1;
 
-	// $("#myToast").toast("hide");
-	// $("#hideBtn").click(function(){
-	//     $("#myToast").toast("hide");
-	// });
+		var elm = '<a href="#">&laquo;</a>';
+		for(var i=initialPage; i<=lastPage; i++){
+			activeClass = i == currentPage ? "active" : ""; 
+			elm += `<a href="#" onclick="getTicketsForPage(event, ${i})" class="${activeClass}">${i}</a>`;
+		}
+		elm += '<a href="#">&raquo;</a>';
+		$("#paginationContainer").html(elm);
 
-	// $("#disposeBtn").click(function(){
-	//     $("#myToast").toast("dispose");
-	// });
+	}
 
 	$(document).ready(function () {
-		getTickets();
+		getTickets(0);
 	});
-
-	// if (isAuthorised) {
-	// 	getTickets();
-	// }

@@ -71,7 +71,7 @@
                         <img src="images/title_aero.png"/>
                       </div>
                       <div class="col-md-5 float-upload_img-child-right-element">
-                        <h5 class="heading mb-4" id="myToastBtn">Contact <span class="name">GoDrazy</span></h5>
+                        <h5 class="heading mb-4">Contact <span class="name">GoDrazy</span></h5>
                       </div>
                     </div>
 
@@ -144,18 +144,18 @@
       <div id="norecordfound"></div>
 
       <!-- <button class="queryHeading">Load more</button> -->
-      <div class="pagination">
-        <a href="#">&laquo;</a>
+      <div class="pagination" id="paginationContainer">
+        <!-- <a href="#">&laquo;</a>
         <a href="#" onclick="getTicketsForPage(event, 1)" class="active">1</a>
         <a href="#" onclick="getTicketsForPage(event, 2)" >2</a>
         <a href="#" onclick="getTicketsForPage(event, 3)" >3</a>
         <a href="#" onclick="getTicketsForPage(event, 4)" >4</a>
         <a href="#" onclick="getTicketsForPage(event, 5)" >5</a>
         <a href="#">&raquo;</a>
-      </div>
+      </div> -->
     </div>
 
-  	<!--Toast : Green variant -->
+  	<!--Toast : Create Ticket Success -->
     <div class="toast bg-success text-white fade" id="createQuerySuccessToast" data-bs-autohide="true" style="position: absolute; top: 10px; right: 10px; z-index: 1000;" >
       <div class="toast-header" style="background-color: #28a745; color:rgb(255 255 244)">
         <strong class="me-auto"><i class="bi-gift-fill"></i> Created Successfully!</strong>
@@ -166,14 +166,13 @@
       </div>
     </div>
 
+    <!--Toast : Create Ticket Fail -->
     <div class="toast bg-danger text-white fade" id="createQueryFailToast" data-bs-autohide="true" style="position: absolute; top: 10px; right: 10px; z-index: 1000;">
       <div class="toast-header bg-danger text-white">
           <strong class="me-auto"><i class="bi-gift-fill"></i> Creation Failed!</strong>
           <button type="button" class="btn-close btn-close-white" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
       </div>
-      <div class="toast-body"> Ticket creation failed, please try after some time
-        <!-- <a href="#" class="text-white">Click here!</a> -->
-      </div>
+      <div class="toast-body"> Ticket creation failed, please try after some time</div>
   </div>
 
     <script src="js/jquery.min.js"></script>
