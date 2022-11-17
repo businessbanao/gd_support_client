@@ -758,3 +758,8 @@ Pagination : page no
     font-size: 15px;
     color: #0083be;
 }
+
+.toast-body {
+  text-align: left;
+  padding: 0.75rem;
+}

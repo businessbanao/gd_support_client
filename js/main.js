@@ -255,20 +255,20 @@
 			isFirstPage = true;
 		}
 
-		var elm = isFirstPage ? "" : `<a href="#" onclick="getNextBatch(${skipLeft})">&laquo;</a>`;
+		var elm = isFirstPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipLeft})">&laquo;</a>`;
 		for(var i=firstPage; i<=lastPage; i++){
 			console.log("page : " + i);
 			activeClass = i == currentPage ? "active" : ""; 
 			elm += `<a href="#" onclick="getTicketsForPage(event, ${i})" class="${activeClass}">${i}</a>`;
 		}
-		elm += isLastPage ? "" : `<a href="#" onclick="getNextBatch(${skipRight})">&raquo;</a>`;
+		elm += isLastPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipRight})">&raquo;</a>`;
 
 		$("#paginationContainer").html(elm);
 
 	}
 
-	function getNextBatch(batchSkipCount){
-		console.log("batchSkipCount : " + batchSkipCount);
+	function getNextBatch(event, batchSkipCount){
+		event.preventDefault();
 		getTickets(batchSkipCount);
 		updatePageNo(batchSkipCount);
 	}
