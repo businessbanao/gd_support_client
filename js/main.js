@@ -38,7 +38,9 @@
 				type: "GET",
 				success: function (data) {
 					// Empty the container
-					$('#queryListContainer').html('')
+					$('#queryListContainer').html('');
+					$("#norecordfound img").remove();
+
 					var ticketArray = data.object.TicketsList.filter(e => e.contactMedium == 'query');
 
 					if (undefined != ticketArray && ticketArray.length > 0) {
@@ -67,9 +69,10 @@
 							'</tr>';
 							document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
 						}
-
+						$("#outOfTickets").text((skipCount+1)*10);
+						$("#totalTicket").text(data.object.totalTickets);
 						if(skipCount == 0){
-							updatePageNo(data.object.totalTickets, skipCount);
+							updatePageNo(skipCount);
 						}
 
 					} else {
@@ -84,8 +87,11 @@
 	function getTicketsForPage(event, pageNumber){
 		skipCount = parseInt(pageNumber-1)*10;
 		getTickets(skipCount);
-		$(".pagination a").removeClass("active")
-		$(event.target).addClass("active");
+		$(".pagination a").removeClass("active");
+		if(event != undefined){
+			$(event.target).addClass("active");
+		}
+
 	}
 
 	function createTicket(contactMedium) {
@@ -224,24 +230,47 @@
 		(event.target.parentElement.parentElement).style.zIndex = -1;
 	}
 
-	function updatePageNo(totalTickets, skipCount){
-		var totalPages = 0; 
-		var wholePages =  Math.trunc(totalTickets/10);
-		var remainPages = totalTickets%10 > 0 ? 1 : 0;
-		totalPages = wholePages + remainPages;
-		var activeClass = "";
-		var currentPage = (skipCount/10)+1;
-		var initialPage = currentPage < pageBatchSize ? 1 : (Math.trunc(currentPage/pageBatchSize)*pageBatchSize)+1;
-		var lastPage = currentPage < pageBatchSize ? pageBatchSize : (initialPage + pageBatchSize) - 1;
+	function updatePageNo(skipCount){
+		var isLastPage = false;
+		var isFirstPage = false;
 
-		var elm = '<a href="#">&laquo;</a>';
-		for(var i=initialPage; i<=lastPage; i++){
+		var totalTickets = parseInt($("#totalTicket").text());
+		var totalPages = Math.trunc(totalTickets/10) + (totalTickets%10 > 0 ? 1 : 0);
+		var activeClass = "";
+		
+		var currentPage = (skipCount/10)+1;
+		var firstPage = currentPage < pageBatchSize ? 1 : (Math.trunc(currentPage/pageBatchSize)*pageBatchSize)+1;
+		var lastPage = currentPage < pageBatchSize ? pageBatchSize : (firstPage + pageBatchSize) - 1;
+
+		var skipLeft = ((firstPage*10)-10)-(pageBatchSize*10);
+		skipLeft = skipLeft < 0 ? 0 : skipLeft;
+		var skipRight = lastPage*10;		
+
+	
+		if(lastPage >= totalPages){
+			isLastPage = true;
+			lastPage = totalPages; 
+		}
+		if(firstPage == 1){
+			isFirstPage = true;
+		}
+
+		var elm = isFirstPage ? "" : `<a href="#" onclick="getNextBatch(${skipLeft})">&laquo;</a>`;
+		for(var i=firstPage; i<=lastPage; i++){
+			console.log("page : " + i);
 			activeClass = i == currentPage ? "active" : ""; 
 			elm += `<a href="#" onclick="getTicketsForPage(event, ${i})" class="${activeClass}">${i}</a>`;
 		}
-		elm += '<a href="#">&raquo;</a>';
+		elm += isLastPage ? "" : `<a href="#" onclick="getNextBatch(${skipRight})">&raquo;</a>`;
+
 		$("#paginationContainer").html(elm);
 
+	}
+
+	function getNextBatch(batchSkipCount){
+		console.log("batchSkipCount : " + batchSkipCount);
+		getTickets(batchSkipCount);
+		updatePageNo(batchSkipCount);
 	}
 
 	$(document).ready(function () {

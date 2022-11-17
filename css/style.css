@@ -751,3 +751,10 @@ Pagination : page no
   background-color: #ddd;
   border-radius: 10px;
 }
+
+.noOfRecords{
+    float: left;
+    margin-left: 35px;
+    font-size: 15px;
+    color: #0083be;
+}
