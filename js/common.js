@@ -15,7 +15,39 @@ const protocal = "http";
 const host = "localhost"; //"54.210.61.230"; //
 const port = "3500";
 const baseUrl = `${protocal}://${host}:${port}/`;
-/***** conf constants end *****/
+
+
+/************* APP constants ************/
+const custId_prop = "custId";
+const authToken_prop = "authToken";
+const homePage_prop = "home.html";
+const ticket_page_prop = "ticket.html";
+
+const ticket_Id_prop = "ticketId";
+const customer_id_prop = "customerId";
+
+const open_status_prop = "OPEN";
+const inprogress_status_prop = "INPROGRESS";
+const closed_status_prop = "CLOSED";
+
+const query_contact_prop = "query";
+const call_contact_prop = "call";
+const email_contact_prop = "email";
+
+const ticket_created_toast_action_prop = "ticketCreated";
+const ticket_creation_failed_toast_action_prop = "ticketCreationFailed";
+const upload_img_warning_toast_action_prop = "uploadImgWarning";
+const upload_img_failed_toast_action_prop = "uploadImgFailed";
+
+const login_fail_msg_label = "Something went wrong";
+const ticket_attachment_alt_label = "Ticket attachment";
+const no_ticket_found_label = "No ticket found";
+const admin_not_exist_err_label = "Admin does not exist.";
+const attachment_warning_label = "More than 3 attachments not allowed.";
+
+
+
+
 
 /******************************************************************/
 /***************************** COMMON *****************************/

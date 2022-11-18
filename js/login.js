@@ -3,18 +3,6 @@
 	/***************************** LOGIN ******************************/
 	/******************************************************************/
 
-	/***** constants start *****/
-	// const protocal = "http";
-	// const host = "localhost"; //"54.210.61.230"; //
-	// const port = "3500";
-	// const baseUrl = `${protocal}://${host}:${port}/`;
-
-
-	const custId_prop = "custId";
-	const authToken_prop = "authToken";
-	const homePage_prop = "home.html";
-	/***** constants end *****/
-
 	$("#loginbtn").click(function (event) {
 		event.preventDefault();
 		login($("#email").val(), $("#password").val());
@@ -41,7 +29,7 @@
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				($("#errorMsg")[0]).innerHTML = "Something went wrong";
+				($("#errorMsg")[0]).innerHTML = login_fail_msg_label;
 				$("#errorMsg").show();
 			}
 		});

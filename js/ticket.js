@@ -12,7 +12,7 @@
 	}
 
 	function getTicketbyId() {
-		var ticketId = getParameterByName("ticketId");
+		var ticketId = getParameterByName(ticket_Id_prop);
 		if (ticketId) {
 			$.ajax({
 				url: `${baseUrl}api/v1/admin/support/getTicket/${ticketId}`,
@@ -27,7 +27,7 @@
 
 					var docUrls = ticket.docUrl;
 					for (var i = 0; i < docUrls.length; i++) {
-						$("#queryAttachment").html('<img src="' + docUrls[i] + '" alt="Interior Design Work" style="height: 200px; margin-left:10px;"></img>');
+						$("#queryAttachment").html('<img src="' + docUrls[i] + '" alt="'+ticket_attachment_alt_label+'" style="height: 200px; margin-left:10px;"></img>');
 					}
 				},
 				error: function (error) { console.log("Error : ", `Error ${error}`); }
@@ -37,17 +37,15 @@
 
 	function updateStatus(status){
 		switch (status) {
-			case "OPEN":
+			case open_status_prop:
 				$("#open-status").removeClass("open-status");
 				$("#open-status").addClass("open-status-active");				
 				break;
-			case "INPROGRESS":
-				inprogress-status -active
+			case inprogress_status_prop:
 				$("#inprogress-status").removeClass("inprogress-status");
 				$("#inprogress-status").addClass("inprogress-status-active");
 				break;
-			case "CLOSED":
-				closed-status -active
+			case closed_status_prop:
 				$("#closed-status").removeClass("closed-status");
 				$("#closed-status").addClass("closed-status-active");
 				break;		

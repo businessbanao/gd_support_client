@@ -5,21 +5,19 @@
 	/***** constants start *****/
 	const ticketLimit = 10;
 	const pageBatchSize = 5;
-	/***** constants end *****/
 
-	/***** variables end *****/
+	/***** variables *****/
 	let imgArr = [];
 	let queryType = "";
-	/***** variables end *****/
 
 	function getTickets(skipCount) {
-		var custId = localStorage.getItem("custId");
+		var custId = localStorage.getItem(custId_prop);
 		var custExist = false;
 		if (custId != null && custId != undefined && custId != "") { custExist = true; }
 
 		if (custExist) {
 			$.ajax({
-				url: `${baseUrl}api/v1/admin/support/getTickets/${skipCount}/${ticketLimit}?customerId=${custId}`,
+				url: `${baseUrl}api/v1/admin/support/getTickets/${skipCount}/${ticketLimit}?${customer_id_prop}=${custId}`,
 				type: "GET",
 				success: function (data) {
 					// Empty the container
@@ -27,30 +25,30 @@
 					$("#norecordfound img").remove();
 					$(".noOfRecords").show();
 
-					var ticketArray = data.object.TicketsList.filter(e => e.contactMedium == 'query');
+					var ticketArray = data.object.TicketsList.filter(e => e.contactMedium == query_contact_prop);
 
 					if (undefined != ticketArray && ticketArray.length > 0) {
 						var elm = '';
-						var status;
+						var status_class;
 
 						for (var i = 0; i < ticketArray.length; i++) {
 							elm = '';
-							if ((ticketArray[i]).status == 'OPEN') { status = 'active'; }
-							else if ((ticketArray[i]).status == 'INPROGRESS') { status = 'waiting'; }
+							if ((ticketArray[i]).status == open_status_prop) { status_class = 'active'; }
+							else if ((ticketArray[i]).status == inprogress_status_prop) { status_class = 'waiting'; }
 							elm += '<tr>' +
 								'<td class="d-flex align-items-center">' +
 								'<div>';
-							if ((ticketArray[i]).contactMedium == 'query') {
+							if ((ticketArray[i]).contactMedium == query_contact_prop) {
 								elm += '<span class="listcontent">' + (ticketArray[i]).query + '</span><br>';
 							}
 							elm += '<span class="listcontent">' + (ticketArray[i]).updatedAt.substring(0, 10) + '</span>' +
 								'</div>' +
 								'</td>' +
 								'<td>' +
-								'<span class="' + status + '">' + (ticketArray[i]).status + '</span>' +
+								'<span class="' + status_class + '">' + (ticketArray[i]).status + '</span>' +
 								'</td>' +
 								'<td>' +
-								'<a class="far fa-eye" style="box-shadow: 1px 1px 25px #8586b994;" href="ticket.html?ticketId=' + (ticketArray[i])._id + '"></a>' +
+								'<a class="far fa-eye" style="box-shadow: 1px 1px 25px #8586b994;" href="ticket.html?'+ticket_Id_prop+'=' + (ticketArray[i])._id + '"></a>' +
 								'</td>';
 							'</tr>';
 							document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
@@ -63,12 +61,12 @@
 
 					} else {
 						$(".noOfRecords").hide();
-						$("#norecordfound").html('<img src="images/norecordfound.jpg" alt="Go Drazy" class="img-fluid">');
+						$("#norecordfound").html('<img src="images/norecordfound.jpg" alt="'+no_ticket_found_label+'" class="img-fluid">');
 					}
 				},
 				error: function (error) { console.log("Error : ", `Error ${error}`); }
 			});
-		} else { document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', "Admin does not exist."); }
+		} else { document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', admin_not_exist_err_label); }
 	}
 
 	function getTicketsForPage(event, pageNumber){
@@ -84,24 +82,24 @@
 	function createTicket(contactMedium) {
 		queryType = contactMedium;
 		if(validateForm()){
-			var custId = localStorage.getItem("custId");
+			var custId = localStorage.getItem(custId_prop);
 			var formData;
-			if (contactMedium == "call") {
-				formData = { query: "", contactMedium: "call", status: "OPEN" };
-			} else if (contactMedium == "email") {
-				formData = { query: "", contactMedium: "email", status: "OPEN" };
-			} else if (contactMedium == "query") {
-				formData = { query:$("#query").val(), contactMedium:"query", status: "OPEN", docUrl:imgArr };
+			if (contactMedium == call_contact_prop) {
+				formData = { query: "", contactMedium: call_contact_prop, status: open_status_prop };
+			} else if (contactMedium == email_contact_prop) {
+				formData = { query: "", contactMedium: email_contact_prop, status: open_status_prop };
+			} else if (contactMedium == query_contact_prop) {
+				formData = { query:$("#query").val(), contactMedium: query_contact_prop , status: open_status_prop, docUrl:imgArr };
 			}
 			$.ajax({
 				url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
 				type: "POST",
 				data: formData,
 				success: function (data, textStatus, jqXHR) {
-					showToast("ticketCreated", data.object.Message, data.object.ticket._id);
+					showToast(ticket_created_toast_action_prop, data.object.Message, data.object.ticket._id);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					showToast("ticketCreationFailed", "", "");
+					showToast(ticket_creation_failed_toast_action_prop, "", "");
 				}
 			});
 		} else {
@@ -111,7 +109,7 @@
 
 	function validateForm(){
 		var isValid = false;
-		if(queryType == "query"){
+		if(queryType == query_contact_prop){
 			if($("#query").val() == '') {
 				$("#query").addClass("requiredField");
 				$(".requiredFieldLabel").show();
@@ -123,7 +121,7 @@
 			}
 	
 			if(($("#file")[0]).files.length > 3) {
-				($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
+				($("#form-message-warning")[0]).innerHTML = attachment_warning_label;
 				$("#form-message-warning").show();
 				isValid = false;
 			}
@@ -136,16 +134,16 @@
 
 	function uploadImage(event) {
 		if (imgArr.length > 3) {
-			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
+			($("#form-message-warning")[0]).innerHTML = attachment_warning_label;
 			$("#form-message-warning").show();
 			setTimeout(() => {
 				$("#form-message-warning").hide();
 			}, 5000);
-			showToast("uploadImgWarning","","");
+			showToast(upload_img_warning_toast_action_prop,"","");
 			return;
 		} else {
 			$(".loader").show();
-			let authorizationToken = localStorage.getItem("authToken") || ''
+			let authorizationToken = localStorage.getItem(authToken_prop) || ''
 			let fileObj = event.target.files ? event.target.files[0] : {};
 	
 			let formData = new FormData();
@@ -174,7 +172,7 @@
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					$(".loader").hide();
-					showToast("uploadImgFailed", "", "");					
+					showToast(upload_img_failed_toast_action_prop, "", "");					
 				}
 			});
 		}
@@ -184,7 +182,7 @@
 		uploadImage(e);
 		$("#attachmentHolder").html('');
 		if (($("#file")[0]).files.length > 3) {
-			($("#form-message-warning")[0]).innerHTML = "More than 3 attachments not allowed.";
+			($("#form-message-warning")[0]).innerHTML = attachment_warning_label;
 			$("#form-message-warning").show();
 		} else {
 			$("#form-message-warning").hide();
@@ -201,18 +199,18 @@
 	}
 
 	function showToast(actionResp, toastMessage, ticketId){
-		if(actionResp == "ticketCreated"){
+		if(actionResp == ticket_created_toast_action_prop){
 			document.getElementById("createQuerySuccessToast").style.zIndex = "10000";
 			$("#createQuerySuccessToastmessage").text(toastMessage);
-			$("#createQuerySuccessToastClick").attr("href", "ticket.html?ticketId="+ticketId);
+			$("#createQuerySuccessToastClick").attr("href", ticket_page_prop+"?"+ticket_Id_prop+"="+ticketId);
 			$("#createQuerySuccessToast").toast("show");
-		} else if(actionResp == "ticketCreationFailed"){
+		} else if(actionResp == ticket_creation_failed_toast_action_prop){
 			document.getElementById("createQueryFailToast").style.zIndex = "10000";
 			$("#createQueryFailToast").toast("show");
-		} else if(actionResp == "uploadImgWarning"){
+		} else if(actionResp == upload_img_warning_toast_action_prop){
 			document.getElementById("uploadImgWarningToast").style.zIndex = "10000";
 			$("#uploadImgWarningToast").toast("show");
-		} else if(actionResp == "uploadImgFailed"){
+		} else if(actionResp == upload_img_failed_toast_action_prop){
 			document.getElementById("uploadImgFailToast").style.zIndex = "10000";
 			$("#uploadImgFailToast").toast("show");
 		}
@@ -249,7 +247,6 @@
 
 		var elm = isFirstPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipLeft})">&laquo;</a>`;
 		for(var i=firstPage; i<=lastPage; i++){
-			console.log("page : " + i);
 			activeClass = i == currentPage ? "active" : ""; 
 			elm += `<a href="#" onclick="getTicketsForPage(event, ${i})" class="${activeClass}">${i}</a>`;
 		}
