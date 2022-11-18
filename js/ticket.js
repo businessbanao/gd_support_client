@@ -1,26 +1,6 @@
-!(function ($) {
-
-	/******************************************************************/
-	/************************* common code ****************************/
-	/******************************************************************/
-	var authToken = localStorage.getItem("authToken");
-	var isAuthorised = (authToken != null && authToken != "" && authToken != undefined) ? true : false;
-	if ((window.location.href).includes('login.html')) {
-		if (isAuthorised) { window.location.href = "home.html"; }
-	} else {
-		if (!isAuthorised) { window.location.href = "login.html"; }
-	}
-
 	/******************************************************************/
 	/************************** TICKET DETAIL *************************/
 	/******************************************************************/
-	/***** constants start *****/
-	const protocal = "http";
-	const host = "localhost"; //"54.210.61.230"; //
-	const port = "3500";
-	const baseUrl = `${protocal}://${host}:${port}/`;
-
-	/***** constants end *****/
 
 	function getParameterByName(name, url = window.location.href) {
 		name = name.replace(/[\[\]]/g, '\\$&');
@@ -78,8 +58,6 @@
 		}
 	}
 
-	if (isAuthorised) {
+	$(document).ready(function () {
 		getTicketbyId();
-	}
-
-})(jQuery);
+	});

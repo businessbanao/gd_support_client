@@ -1,32 +1,14 @@
 	/******************************************************************/
-	/************************* common code ****************************/
-	/******************************************************************/
-	var authToken = localStorage.getItem("authToken");
-	var isAuthorised = (authToken != null && authToken != "" && authToken != undefined) ? true : false;
-	if ((window.location.href).includes('login.html')) {
-		if (isAuthorised) { window.location.href = "home.html"; }
-	} else {
-		if (!isAuthorised) { window.location.href = "login.html"; }
-	}
-
-	/******************************************************************/
 	/***************************** HOME ******************************/
 	/******************************************************************/
 
 	/***** constants start *****/
-	const protocal = "http";
-	const host = "localhost"; //"54.210.61.230"; //
-	const port = "3500";
-	const baseUrl = `${protocal}://${host}:${port}/`;
 	const ticketLimit = 10;
 	const pageBatchSize = 5;
 	/***** constants end *****/
 
 	/***** variables end *****/
 	let imgArr = [];
-	imgArr.push("a.jpg");
-	imgArr.push("b.jpg");
-	imgArr.push("c.jpg");
 	let queryType = "";
 	/***** variables end *****/
 

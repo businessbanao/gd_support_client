@@ -1,30 +1,18 @@
 
 	/******************************************************************/
-	/************************* common code ****************************/
-	/******************************************************************/
-
-	var authToken_val = localStorage.getItem("authToken");
-	var isAuthorised = (authToken_val != null && authToken_val != "" && authToken_val != undefined) ? true : false;
-	if ((window.location.href).includes('login.html')) {
-		if (isAuthorised) { window.location.href = "home.html"; }
-	} else {
-		if (!isAuthorised) { window.location.href = "login.html"; }
-	}
-
-	/******************************************************************/
 	/***************************** LOGIN ******************************/
 	/******************************************************************/
 
 	/***** constants start *****/
-	const protocal = "http";
-	const host = "localhost"; //"54.210.61.230"; //
-	const port = "3500";
-	const baseUrl = `${protocal}://${host}:${port}/`;
+	// const protocal = "http";
+	// const host = "localhost"; //"54.210.61.230"; //
+	// const port = "3500";
+	// const baseUrl = `${protocal}://${host}:${port}/`;
 
 
-	const custId = "custId";
-	const authToken = "authToken";
-	const homePage = "home.html";
+	const custId_prop = "custId";
+	const authToken_prop = "authToken";
+	const homePage_prop = "home.html";
 	/***** constants end *****/
 
 	$("#loginbtn").click(function (event) {
@@ -44,9 +32,9 @@
 			data: formData,
 			success: function (data, textStatus, jqXHR) {
 				if (!data.error) {
-					localStorage.setItem(`${custId}`, data.object.AdminDetails._id);
-					localStorage.setItem(`${authToken}`, data.object.authToken);
-					window.location.href = `${homePage}`;
+					localStorage.setItem(`${custId_prop}`, data.object.AdminDetails._id);
+					localStorage.setItem(`${authToken_prop}`, data.object.authToken);
+					window.location.href = `${homePage_prop}`;
 				} else if (data.error) {
 					($("#errorMsg")[0]).innerHTML = data.object.msg;
 					$("#errorMsg").show();

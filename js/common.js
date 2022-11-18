@@ -1,23 +1,21 @@
 /******************************************************************/
-/**************************** common code *************************/
+/************************* common code ****************************/
 /******************************************************************/
+var authToken = localStorage.getItem("authToken");
+var isAuthorised = (authToken != null && authToken != "" && authToken != undefined) ? true : false;
+if ((window.location.href).includes('login.html')) {
+	if (isAuthorised) { window.location.href = "home.html"; }
+} else {
+	if (!isAuthorised) { window.location.href = "login.html"; }
+}
 
-	var isAuthorised = false;
-	
-	function authUser(){
-		var authToken = localStorage.getItem("authToken");
-		if((window.location.href).includes('login.html')){
-			if(authToken != null && authToken != "" && authToken != undefined){
-				isAuthorised = true;
-				window.location.href = "home.html";
-			}
-		} else {
-			if(authToken == null && authToken == "" && authToken == undefined){
-				isAuthorised = false;
-				window.location.href = "login.html";
-			}
-		}
-	}
+
+/***** conf constants start *****/
+const protocal = "http";
+const host = "localhost"; //"54.210.61.230"; //
+const port = "3500";
+const baseUrl = `${protocal}://${host}:${port}/`;
+/***** conf constants end *****/
 
 /******************************************************************/
 /***************************** COMMON *****************************/
