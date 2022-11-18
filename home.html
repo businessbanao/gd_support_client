@@ -138,7 +138,7 @@
 
     <div class="queryContainer">
       <h2 class="queryHeading">My Queries</h2>
-      <span class="noOfRecords">Showing <b><span id="outOfTickets"></span></b> out of <b><span id="totalTicket"></span></b></span>
+      <span class="noOfRecords">Showing <b><span id="outOfTickets">0</span></b> out of <b><span id="totalTicket">0</span></b></span>
       <table class="table table-responsive-xl">
         <tbody id="queryListContainer"></tbody>
       </table>
@@ -156,25 +156,45 @@
       </div> -->
     </div>
 
-  	<!--Toast : Create Ticket Success -->
-    <div class="toast bg-success text-white fade" id="createQuerySuccessToast" data-bs-autohide="true" style="position: fixed; top: 10px; right: 10px; z-index: 1000;" >
-      <div class="toast-header" style="background-color: #28a745; color:rgb(255 255 244)">
-        <strong class="me-auto"><i class="bi-gift-fill"></i> Created Successfully!</strong>
-        <button type="button" class="btn-close" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
+    <section>
+      <!--Toast : Create Ticket Success -->
+      <div class="toast bg-success text-white fade" data-bs-autohide="true" style="position: fixed; top: 10px; right: 10px; z-index: -1;" id="createQuerySuccessToast">
+        <div class="toast-header" style="background-color: #28a745; color:rgb(255 255 244)">
+          <strong class="me-auto"><i class="bi-gift-fill"></i> Created Successfully!</strong>
+          <button type="button" class="btn-close" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body" ><span id="createQuerySuccessToastmessage"></span><br> 
+          To view the ticket, <a href="#" id="createQuerySuccessToastClick"><b>Click here!</b></a>
+        </div>
       </div>
-      <div class="toast-body" ><span id="createQuerySuccessToastmessage"></span><br> 
-        To view the ticket, <a href="#" id="createQuerySuccessToastClick"><b>Click here!</b></a>
-      </div>
-    </div>
 
-    <!--Toast : Create Ticket Fail -->
-    <div class="toast bg-danger text-white fade" id="createQueryFailToast" data-bs-autohide="true" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
-      <div class="toast-header bg-danger text-white">
-          <strong class="me-auto"><i class="bi-gift-fill"></i> Creation Failed!</strong>
-          <button type="button" class="btn-close btn-close-white" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
+      <!--Toast : Create Ticket Fail -->
+      <div class="toast bg-danger text-white fade" data-bs-autohide="true" style="position: fixed; top: 10px; right: 10px; z-index: -1;" id="createQueryFailToast">
+        <div class="toast-header bg-danger text-white">
+            <strong class="me-auto"><i class="bi-gift-fill"></i> Creation Failed!</strong>
+            <button type="button" class="btn-close btn-close-white" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body"> Ticket creation failed, please try after some time</div>
       </div>
-      <div class="toast-body"> Ticket creation failed, please try after some time</div>
-  </div>
+
+      <!--Toast : Upload Image Fail -->
+      <div class="toast bg-danger text-white fade" data-bs-autohide="true" style="position: fixed; top: 10px; right: 10px; z-index: -1;" id="uploadImgFailToast">
+          <div class="toast-header bg-danger text-white">
+              <strong class="me-auto"><i class="bi-gift-fill"></i> Upload Failed!</strong>
+              <button type="button" class="btn-close btn-close-white" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
+          </div>
+          <div class="toast-body"> Attachment upload failed.</div>
+      </div>
+
+      <!--Toast : More than 3 attachment warning -->
+      <div class="toast bg-warning text-dark fade" data-bs-autohide="true" style="position: fixed; top: 10px; right: 10px; z-index: -1;" id="uploadImgWarningToast">
+        <div class="toast-header bg-warning text-dark">
+            <strong class="me-auto"><i class="bi-gift-fill"></i> Warning!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">More than 3 attachment not allowed.</div>
+      </div>
+    </section>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/main.js"></script>

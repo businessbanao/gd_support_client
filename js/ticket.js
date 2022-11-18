@@ -16,7 +16,7 @@
 	/******************************************************************/
 	/***** constants start *****/
 	const protocal = "http";
-	const host = "localhost"; //"54.210.61.230";
+	const host = "localhost"; //"54.210.61.230"; //
 	const port = "3500";
 	const baseUrl = `${protocal}://${host}:${port}/`;
 

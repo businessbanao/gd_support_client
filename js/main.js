@@ -15,7 +15,7 @@
 
 	/***** constants start *****/
 	const protocal = "http";
-	const host = "localhost"; //"54.210.61.230";
+	const host = "localhost"; //"54.210.61.230"; //
 	const port = "3500";
 	const baseUrl = `${protocal}://${host}:${port}/`;
 	const ticketLimit = 10;
@@ -24,6 +24,9 @@
 
 	/***** variables end *****/
 	let imgArr = [];
+	imgArr.push("a.jpg");
+	imgArr.push("b.jpg");
+	imgArr.push("c.jpg");
 	let queryType = "";
 	/***** variables end *****/
 
@@ -40,6 +43,7 @@
 					// Empty the container
 					$('#queryListContainer').html('');
 					$("#norecordfound img").remove();
+					$(".noOfRecords").show();
 
 					var ticketArray = data.object.TicketsList.filter(e => e.contactMedium == 'query');
 
@@ -69,13 +73,14 @@
 							'</tr>';
 							document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
 						}
-						$("#outOfTickets").text((skipCount+1)*10);
+						$("#outOfTickets").text((skipCount+10));
 						$("#totalTicket").text(data.object.totalTickets);
 						if(skipCount == 0){
 							updatePageNo(skipCount);
 						}
 
 					} else {
+						$(".noOfRecords").hide();
 						$("#norecordfound").html('<img src="images/norecordfound.jpg" alt="Go Drazy" class="img-fluid">');
 					}
 				},
@@ -104,7 +109,7 @@
 			} else if (contactMedium == "email") {
 				formData = { query: "", contactMedium: "email", status: "OPEN" };
 			} else if (contactMedium == "query") {
-				formData = { query:$("#query").val(), contactMedium:"query", status: "OPEN", docUrl:["333", "222", "111"] };
+				formData = { query:$("#query").val(), contactMedium:"query", status: "OPEN", docUrl:imgArr };
 			}
 			$.ajax({
 				url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
@@ -114,7 +119,7 @@
 					showToast("ticketCreated", data.object.Message, data.object.ticket._id);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					showToast("ticketCreationFaild", "", "");
+					showToast("ticketCreationFailed", "", "");
 				}
 			});
 		} else {
@@ -154,7 +159,7 @@
 			setTimeout(() => {
 				$("#form-message-warning").hide();
 			}, 5000);
-			//TODO :  show toaster
+			showToast("uploadImgWarning","","");
 			return;
 		} else {
 			$(".loader").show();
@@ -187,6 +192,7 @@
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					$(".loader").hide();
+					showToast("uploadImgFailed", "", "");					
 				}
 			});
 		}
@@ -218,12 +224,16 @@
 			$("#createQuerySuccessToastmessage").text(toastMessage);
 			$("#createQuerySuccessToastClick").attr("href", "ticket.html?ticketId="+ticketId);
 			$("#createQuerySuccessToast").toast("show");
-		} else if(actionResp == "ticketCreationFaild"){
+		} else if(actionResp == "ticketCreationFailed"){
 			document.getElementById("createQueryFailToast").style.zIndex = "10000";
 			$("#createQueryFailToast").toast("show");
+		} else if(actionResp == "uploadImgWarning"){
+			document.getElementById("uploadImgWarningToast").style.zIndex = "10000";
+			$("#uploadImgWarningToast").toast("show");
+		} else if(actionResp == "uploadImgFailed"){
+			document.getElementById("uploadImgFailToast").style.zIndex = "10000";
+			$("#uploadImgFailToast").toast("show");
 		}
-
-
 	};
 
 	function closeToast(event){
