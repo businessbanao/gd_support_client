@@ -100,6 +100,8 @@
 				success: function (data, textStatus, jqXHR) {
 					if (contactMedium == query_contact_prop){
 						showToast(ticket_created_toast_action_prop);
+						$("#query").val('');
+						imgArr = [];
 						getTickets(0);
 					}
 				},
