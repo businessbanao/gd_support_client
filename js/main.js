@@ -70,6 +70,7 @@
 	}
 
 	function getTicketsForPage(event, pageNumber){
+		event.preventDefault();
 		skipCount = parseInt(pageNumber-1)*10;
 		getTickets(skipCount);
 		$(".pagination a").removeClass("active");
@@ -99,6 +100,7 @@
 				success: function (data, textStatus, jqXHR) {
 					if (contactMedium == query_contact_prop){
 						showToast(ticket_created_toast_action_prop);
+						getTickets(0);
 					}
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -237,8 +239,6 @@
 			isFirstPage = true;
 		}
 
-// style="pointer-events: none;"
-
 		var elm = isFirstPage ? `<a href="#" style="pointer-events: none;">&laquo;</a>` : `<a href="#" onclick="getNextBatch(event, ${skipLeft})">&laquo;</a>`;
 		for(var i=firstPage; i<=lastPage; i++){
 			activeClass = i == currentPage ? "active" : ""; 
@@ -249,42 +249,6 @@
 		$("#paginationContainer").html(elm);
 
 	}
-
-	// function updatePageNo(skipCount){
-	// 	var isLastPage = false;
-	// 	var isFirstPage = false;
-
-	// 	var totalTickets = parseInt($("#totalTicket").text());
-	// 	var totalPages = Math.trunc(totalTickets/10) + (totalTickets%10 > 0 ? 1 : 0);
-	// 	var activeClass = "";
-		
-	// 	var currentPage = (skipCount/10)+1;
-	// 	var firstPage = currentPage < pageBatchSize ? 1 : (Math.trunc(currentPage/pageBatchSize)*pageBatchSize)+1;
-	// 	var lastPage = currentPage < pageBatchSize ? pageBatchSize : (firstPage + pageBatchSize) - 1;
-
-	// 	var skipLeft = ((firstPage*10)-10)-(pageBatchSize*10);
-	// 	skipLeft = skipLeft < 0 ? 0 : skipLeft;
-	// 	var skipRight = lastPage*10;		
-
-	
-	// 	if(lastPage >= totalPages){
-	// 		isLastPage = true;
-	// 		lastPage = totalPages; 
-	// 	}
-	// 	if(firstPage == 1){
-	// 		isFirstPage = true;
-	// 	}
-
-	// 	var elm = isFirstPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipLeft})">&laquo;</a>`;
-	// 	for(var i=firstPage; i<=lastPage; i++){
-	// 		activeClass = i == currentPage ? "active" : ""; 
-	// 		elm += `<a href="#" onclick="getTicketsForPage(event, ${i})" class="${activeClass}">${i}</a>`;
-	// 	}
-	// 	elm += isLastPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipRight})">&raquo;</a>`;
-
-	// 	$("#paginationContainer").html(elm);
-
-	// }
 
 	function getNextBatch(event, batchSkipCount){
 		event.preventDefault();
