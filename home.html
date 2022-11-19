@@ -145,27 +145,18 @@
       <div id="norecordfound"></div>
 
       <!-- <button class="queryHeading">Load more</button> -->
-      <div class="pagination" id="paginationContainer">
-        <!-- <a href="#">&laquo;</a>
-        <a href="#" onclick="getTicketsForPage(event, 1)" class="active">1</a>
-        <a href="#" onclick="getTicketsForPage(event, 2)" >2</a>
-        <a href="#" onclick="getTicketsForPage(event, 3)" >3</a>
-        <a href="#" onclick="getTicketsForPage(event, 4)" >4</a>
-        <a href="#" onclick="getTicketsForPage(event, 5)" >5</a>
-        <a href="#">&raquo;</a>
-      </div> -->
-    </div>
+      <div class="pagination" id="paginationContainer"></div>
 
     <section>
       <!--Toast : Create Ticket Success -->
       <div class="toast bg-success text-white fade" data-bs-autohide="true" style="position: fixed; top: 10px; right: 10px; z-index: -1;" id="createQuerySuccessToast">
         <div class="toast-header" style="background-color: #28a745; color:rgb(255 255 244)">
-          <strong class="me-auto"><i class="bi-gift-fill"></i> Created Successfully!</strong>
+          <strong class="me-auto"><i class="bi-gift-fill"></i> &nbsp; Created Successfully!</strong>
           <button type="button" class="btn-close" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
         </div>
-        <div class="toast-body" ><span id="createQuerySuccessToastmessage"></span><br> 
+        <!-- <div class="toast-body" ><span id="createQuerySuccessToastmessage"></span><br> 
           To view the ticket, <a href="#" id="createQuerySuccessToastClick"><b>Click here!</b></a>
-        </div>
+        </div> -->
       </div>
 
       <!--Toast : Create Ticket Fail -->
@@ -174,7 +165,7 @@
             <strong class="me-auto"><i class="bi-gift-fill"></i> Creation Failed!</strong>
             <button type="button" class="btn-close btn-close-white" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
         </div>
-        <div class="toast-body"> Ticket creation failed, please try after some time</div>
+        <!-- <div class="toast-body"> Ticket creation failed, please try after some time</div> -->
       </div>
 
       <!--Toast : Upload Image Fail -->
@@ -183,16 +174,16 @@
               <strong class="me-auto"><i class="bi-gift-fill"></i> Upload Failed!</strong>
               <button type="button" class="btn-close btn-close-white" onclick="closeToast(event)" data-bs-dismiss="toast"></button>
           </div>
-          <div class="toast-body"> Attachment upload failed.</div>
+          <!-- <div class="toast-body"> Attachment upload failed.</div> -->
       </div>
 
       <!--Toast : More than 3 attachment warning -->
       <div class="toast bg-warning text-dark fade" data-bs-autohide="true" style="position: fixed; top: 10px; right: 10px; z-index: -1;" id="uploadImgWarningToast">
         <div class="toast-header bg-warning text-dark">
-            <strong class="me-auto"><i class="bi-gift-fill"></i> Warning!</strong>
+            <strong class="me-auto"><i class="bi-gift-fill"></i> Max 3 attachments allowed.!</strong>
             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
         </div>
-        <div class="toast-body">More than 3 attachment not allowed.</div>
+        <!-- <div class="toast-body">More than 3 attachment not allowed.</div> -->
       </div>
     </section>
 

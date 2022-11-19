@@ -27,7 +27,10 @@
 
 					var docUrls = ticket.docUrl;
 					for (var i = 0; i < docUrls.length; i++) {
-						$("#queryAttachment").html('<img src="' + docUrls[i] + '" alt="'+ticket_attachment_alt_label+'" style="height: 200px; margin-left:10px;"></img>');
+						$('<div class="float-child-element" style="width:30%; background-color: #e9e9eb; border-radius: 5px; margin-left: 10px;">'+
+						'<img src="' + docUrls[i] + '" style="margin-left:12px; height:90px"/>'+
+						'</div>').appendTo("#queryAttachment");
+						// $('<img src="' + docUrls[i] + '" alt="'+ticket_attachment_alt_label+'" style="height: 200px; margin-left:10px;"></img>').appendTo("#queryAttachment");
 					}
 				},
 				error: function (error) { console.log("Error : ", `Error ${error}`); }

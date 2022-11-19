@@ -628,6 +628,8 @@ ul > li > a:hover {
     border-radius: 10px;
     height: 60px;
     background-color: #f5f5f5;
+    margin-right: 10px;
+    margin-top: 15px;
 }
 
 .attachmentBlock img{
@@ -762,4 +764,16 @@ Pagination : page no
 .toast-body {
   text-align: left;
   padding: 0.75rem;
+}
+
+.ticketAttachmentImg{
+  margin-left: 12px;
+    width: 80px;
+    height: 80px;
+}
+
+.attachmentTitle{
+  color: #0083be;
+  font-size: 15px;
+  margin-left: 10px;
 }

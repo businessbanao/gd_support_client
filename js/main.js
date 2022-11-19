@@ -53,7 +53,7 @@
 							'</tr>';
 							document.getElementById('queryListContainer').insertAdjacentHTML('beforeend', elm);
 						}
-						$("#outOfTickets").text((skipCount+10));
+						$("#outOfTickets").text((skipCount+10) > parseInt(data.object.totalTickets) ? data.object.totalTickets : (skipCount+10));
 						$("#totalTicket").text(data.object.totalTickets);
 						if(skipCount == 0){
 							updatePageNo(skipCount);
@@ -83,7 +83,7 @@
 		queryType = contactMedium;
 		if(validateForm()){
 			var custId = localStorage.getItem(custId_prop);
-			var formData;
+			var formData = {};
 			if (contactMedium == call_contact_prop) {
 				formData = { query: "", contactMedium: call_contact_prop, status: open_status_prop };
 			} else if (contactMedium == email_contact_prop) {
@@ -94,12 +94,15 @@
 			$.ajax({
 				url: `${baseUrl}api/v1/admin/support/createTicket/${custId}`,
 				type: "POST",
-				data: formData,
+				data: JSON.stringify(formData),
+				contentType: "application/json; charset=utf-8",
 				success: function (data, textStatus, jqXHR) {
-					showToast(ticket_created_toast_action_prop, data.object.Message, data.object.ticket._id);
+					if (contactMedium == query_contact_prop){
+						showToast(ticket_created_toast_action_prop);
+					}
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					showToast(ticket_creation_failed_toast_action_prop, "", "");
+					showToast(ticket_creation_failed_toast_action_prop);
 				}
 			});
 		} else {
@@ -133,13 +136,8 @@
 	}
 
 	function uploadImage(event) {
-		if (imgArr.length > 3) {
-			($("#form-message-warning")[0]).innerHTML = attachment_warning_label;
-			$("#form-message-warning").show();
-			setTimeout(() => {
-				$("#form-message-warning").hide();
-			}, 5000);
-			showToast(upload_img_warning_toast_action_prop,"","");
+		if (imgArr.length >= 3) {
+			showToast(upload_img_warning_toast_action_prop);
 			return;
 		} else {
 			$(".loader").show();
@@ -163,16 +161,14 @@
 					$(".loader").hide();
 					let url = data.object.s3Url;
 					imgArr.push(url);
-					for (let i = 0; i < imgArr.length; i++) {
-						$('<div class="attachmentBlock">'+
-                        '<button type="submit" class="close" onclick="removeattachment(event)"><span>&times;</span></button>'+
-                        '<img src="' + imgArr[i] + '" width="50px" style="margin-left:12px" height="50px"/>'+
-                      	'</div>').appendTo("#attachmentHolder");
-					}
+					$('<div class="attachmentBlock float-child-element">'+
+					'<button type="submit" class="close" onclick="removeattachment(event)"><span>&times;</span></button>'+
+					'<img src="' + url + '" width="50px" style="margin-left:12px" height="50px"/>'+
+					'</div>').appendTo("#attachmentHolder");
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					$(".loader").hide();
-					showToast(upload_img_failed_toast_action_prop, "", "");					
+					showToast(upload_img_failed_toast_action_prop);					
 				}
 			});
 		}
@@ -180,14 +176,6 @@
 
 	$(document).on('change', '#file', function (e) {
 		uploadImage(e);
-		$("#attachmentHolder").html('');
-		if (($("#file")[0]).files.length > 3) {
-			($("#form-message-warning")[0]).innerHTML = attachment_warning_label;
-			$("#form-message-warning").show();
-		} else {
-			$("#form-message-warning").hide();
-			// readURL(this);
-		}
 	});
 
 	$("#upfile").click(function () {
@@ -195,14 +183,18 @@
 	});
 
 	function removeattachment(event){
+		var imgUrl = event.target.parentElement.parentElement.childNodes[1].src;
+		for(var i=0; i<imgArr.length; i++){
+			if(imgArr[i] == imgUrl){
+				imgArr.pop(imgUrl);
+			}
+		}
 		event.target.parentElement.parentElement.remove();
 	}
 
-	function showToast(actionResp, toastMessage, ticketId){
+	function showToast(actionResp){
 		if(actionResp == ticket_created_toast_action_prop){
 			document.getElementById("createQuerySuccessToast").style.zIndex = "10000";
-			$("#createQuerySuccessToastmessage").text(toastMessage);
-			$("#createQuerySuccessToastClick").attr("href", ticket_page_prop+"?"+ticket_Id_prop+"="+ticketId);
 			$("#createQuerySuccessToast").toast("show");
 		} else if(actionResp == ticket_creation_failed_toast_action_prop){
 			document.getElementById("createQueryFailToast").style.zIndex = "10000";
@@ -245,16 +237,54 @@
 			isFirstPage = true;
 		}
 
-		var elm = isFirstPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipLeft})">&laquo;</a>`;
+// style="pointer-events: none;"
+
+		var elm = isFirstPage ? `<a href="#" style="pointer-events: none;">&laquo;</a>` : `<a href="#" onclick="getNextBatch(event, ${skipLeft})">&laquo;</a>`;
 		for(var i=firstPage; i<=lastPage; i++){
 			activeClass = i == currentPage ? "active" : ""; 
 			elm += `<a href="#" onclick="getTicketsForPage(event, ${i})" class="${activeClass}">${i}</a>`;
 		}
-		elm += isLastPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipRight})">&raquo;</a>`;
+		elm += isLastPage ? `<a href="#" style="pointer-events: none;">&raquo;</a>` : `<a href="#" onclick="getNextBatch(event, ${skipRight})">&raquo;</a>`;
 
 		$("#paginationContainer").html(elm);
 
 	}
+
+	// function updatePageNo(skipCount){
+	// 	var isLastPage = false;
+	// 	var isFirstPage = false;
+
+	// 	var totalTickets = parseInt($("#totalTicket").text());
+	// 	var totalPages = Math.trunc(totalTickets/10) + (totalTickets%10 > 0 ? 1 : 0);
+	// 	var activeClass = "";
+		
+	// 	var currentPage = (skipCount/10)+1;
+	// 	var firstPage = currentPage < pageBatchSize ? 1 : (Math.trunc(currentPage/pageBatchSize)*pageBatchSize)+1;
+	// 	var lastPage = currentPage < pageBatchSize ? pageBatchSize : (firstPage + pageBatchSize) - 1;
+
+	// 	var skipLeft = ((firstPage*10)-10)-(pageBatchSize*10);
+	// 	skipLeft = skipLeft < 0 ? 0 : skipLeft;
+	// 	var skipRight = lastPage*10;		
+
+	
+	// 	if(lastPage >= totalPages){
+	// 		isLastPage = true;
+	// 		lastPage = totalPages; 
+	// 	}
+	// 	if(firstPage == 1){
+	// 		isFirstPage = true;
+	// 	}
+
+	// 	var elm = isFirstPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipLeft})">&laquo;</a>`;
+	// 	for(var i=firstPage; i<=lastPage; i++){
+	// 		activeClass = i == currentPage ? "active" : ""; 
+	// 		elm += `<a href="#" onclick="getTicketsForPage(event, ${i})" class="${activeClass}">${i}</a>`;
+	// 	}
+	// 	elm += isLastPage ? "" : `<a href="#" onclick="getNextBatch(event, ${skipRight})">&raquo;</a>`;
+
+	// 	$("#paginationContainer").html(elm);
+
+	// }
 
 	function getNextBatch(event, batchSkipCount){
 		event.preventDefault();

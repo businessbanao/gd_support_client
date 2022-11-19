@@ -12,7 +12,8 @@ if ((window.location.href).includes('login.html')) {
 
 /***** conf constants start *****/
 const protocal = "http";
-const host = "localhost"; //"54.210.61.230"; //
+const host = "54.210.61.230";
+// const host = "localhost";
 const port = "3500";
 const baseUrl = `${protocal}://${host}:${port}/`;
 
