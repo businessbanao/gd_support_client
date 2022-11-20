@@ -464,7 +464,7 @@ ul > li > a:hover {
 
 /* Mobile Navigation */
 .mobile-nav-toggle {
-  position: fixed;
+  position: absolute;
   right: 35px;
   top: 20px;
   z-index: 9998;
